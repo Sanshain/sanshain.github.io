@@ -373,13 +373,11 @@
 				
 				
 				var swipe_start = function (){
-				    
-					 swipe_offset =
-				        (((event.touches || [])[0]) || event)
-					 .screenX;
-									 
+				
+					 swipe_offset = (((event.touches || [])[0])     || event)
+ 					 .screenX;
 					 
-					 console.log('strt: ' + swipe_offset);
+					 console.log('start: '+ swipe_offset);
 					 
 					 swipped = true;
 					 
@@ -409,13 +407,9 @@
 				
 				var swipe_end = function (){				
 				
-				    swipe_offset = swipe_offset - event.screenX;
-					 
-					 /*
-					 swipe_offset = swipe_offset -
-				        (((event.changedTouches||[])[0])||event)
-					 .screenX;		
-                //*/					 
+					 swipe_offset = swipe_offset - 
+					   (((event.changedTouches||[])[0])||event)
+					 .screenX;
 					 
 					 console.log(event.screenX);
 					 console.log('off: '+swipe_offset);
@@ -454,24 +448,28 @@
 				
 				try
 				{
-				   /*
+				
 				   slide_leaf.addEventListener(
-					      'touchstart', swipe_start
+					     'touchstart', swipe_start
 					);
 				   slide_leaf.addEventListener(
 					     'touchend', swipe_end
 					);
-					//*/											
+																
 				}
 				catch(err){
 				
-				   alert('touch error');					
-				}
-				
+				   alert(1);
+					
+				}				
 				
 				slide_leaf.onmousedown = swipe_start;
 				slide_leaf.onmouseup  = swipe_end;
-			
+
+				   
+
+				
+            return true;				
 			}
 			
 			
