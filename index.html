@@ -373,9 +373,13 @@
 				
 				
 				var swipe_start = function (){
-				
-					 swipe_offset = event.screenX;
-					 console.log('d'+event.screenX);
+				    
+					 swipe_offset =
+				        (((event.touches || [])[0]) || event)
+					 .screenX;
+									 
+					 
+					 console.log('strt: ' + swipe_offset);
 					 
 					 swipped = true;
 					 
@@ -405,7 +409,13 @@
 				
 				var swipe_end = function (){				
 				
-					 swipe_offset = swipe_offset - event.screenX;
+				    swipe_offset = swipe_offset - event.screenX;
+					 
+					 /*
+					 swipe_offset = swipe_offset -
+				        (((event.changedTouches||[])[0])||event)
+					 .screenX;		
+                //*/					 
 					 
 					 console.log(event.screenX);
 					 console.log('off: '+swipe_offset);
@@ -444,47 +454,24 @@
 				
 				try
 				{
-				
+				   /*
 				   slide_leaf.addEventListener(
-					     'touchstart', swipe_start
+					      'touchstart', swipe_start
 					);
 				   slide_leaf.addEventListener(
 					     'touchend', swipe_end
 					);
-																
+					//*/											
 				}
 				catch(err){
 				
-				   alert(1);
-					
-				}				
+				   alert('touch error');					
+				}
+				
 				
 				slide_leaf.onmousedown = swipe_start;
 				slide_leaf.onmouseup  = swipe_end;
-				slide_leaf.onmousemove  = function (event){
-				    
-					 if (!swipped || !tuner) return;
-					 
-					 _swipe_offset= swipe_offset - event.screenX;
-
-					 /* выключил, потому что долго:
-					 
-					 cv = (start_off__px-_swipe_offset) + 'px';
-					 
-					 console.log(cv);
-					 
-					 tuner.style.marginLeft = cv;
-	
-//					 if (swipe_offset)*/
-					 
-				};	
-				
-				//if ('ontouchstart' in window) {
-				
-				   
-
-				
-            return true;				
+			
 			}
 			
 			
