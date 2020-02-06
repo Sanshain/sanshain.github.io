@@ -455,15 +455,24 @@
 					 
 				};	
 				
-				if ('ontouchstart' in window) {
+				//if ('ontouchstart' in window) {
+				
+				   
+				
+				try
+				{
 				
 				   slide_leaf.addEventListener(
-					     'touchstart', slide_leaf.onmousedown
+					     'touchstart', () => {alert(0)}
 					);
 				   slide_leaf.addEventListener(
 					     'touchend', slide_leaf.onmouseup
 					);
 																
+				}
+				catch(err){
+				
+				   alert(0);
 				}
 				
             return true;				
