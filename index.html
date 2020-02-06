@@ -476,7 +476,23 @@
 				
 				};
 				
-				
+				var swipe_move = function(){
+				    
+					if (!swipped || !tuner) return;		
+
+					 var e_screenX = 
+					   (((event.changedTouches||[])[0])||event)
+					 .screenX;
+
+               var onstart_x = slider.swipe.onstart_x;
+
+  					var delta = onstart_x - e_screenX;
+
+
+               cv = (start_off__px - delta) + 'px';
+				   
+					tuner.style.marginLeft = cv;					
+				};				
 				
 
 				slide_leaf.addEventListener(
@@ -486,27 +502,15 @@
 				slide_leaf.addEventListener(
 					  'touchend', swipe_end
 				);
+				
+				slide_leaf.addEventListener(
+					  'touchmove', swipe_move
+				);				
 			
 				
 				slide_leaf.onmousedown = swipe_start;
 				slide_leaf.onmouseup  = swipe_end;
-            slide_leaf.onmousemove = function (){
-				
-					if (!swipped || !tuner) return;		
-
-
-
-               var onstart_x = slider.swipe.onstart_x;
-
-  					var delta = onstart_x - event.screenX;
-
-
-               cv = (start_off__px - delta) + 'px';
-				   
-					tuner.style.marginLeft = cv;
-					 
-					 
-				};
+            slide_leaf.onmousemove = swipe_move;
 				   
 
 				
