@@ -1,0 +1,246 @@
+*{
+   position:relative; 
+	margin: 0;
+	padding: 0;
+}
+
+.slide_container{
+
+	position:fixed;
+	top:0;
+	bottom:0;
+	
+	width:100%;
+	background-color:beige;
+	text-align:center;
+	line-height:100vh;	         /* just for ie9+ */
+	
+	overflow: hidden;
+	white-space:nowrap;
+	
+	transition:1s linear;
+	
+	opacity:0;
+	display:none;
+}
+
+.slide_container > .next{
+	right:200px;
+}
+
+/* expand|close buttons */
+.slide_container button{
+	position:absolute;
+	height: 3em;                  /* @button_size */
+	width: 3em;
+	font-size: medium;
+	opacity: 0.2;
+	transition:1s;
+	border-color: beige;      /* @fon */
+	border-style: solid;
+	/*cursor:alias;*/
+	overflow:hidden;
+}
+.slide_container button:hover{
+	opacity: 0.7;
+}
+
+
+
+button.close{
+	top: 1em;
+	right: 30px;			 	          /* @edge_offst */
+	cursor: pointer;
+}
+button.expand{
+	bottom: 1em;
+	left: 30px;			 	          /* @edge_offst */	
+	cursor: sw-resize;
+}
+
+.expand > span, .close>span{
+	display:inline-block;
+	position: absolute;
+	background-color: white;
+}
+
+
+/*close*/
+
+/* плохо реализовал
+   для совместимости с ie8 лучше заменить картинкой 
+ */
+.close>span{
+
+	transition: 1s;
+}
+.close{
+	background-color: transparent;
+}
+.close:hover>span{
+	background-color: gray;
+	
+}
+.close>span{
+	top:-0.6em;
+	margin:auto 1.2em;
+	left:0;
+	
+	border-radius:2em;
+	width:0.3em;
+	height: 4em;
+	
+}
+.close>span.c__right{transform:rotate(45deg);}
+.close>span.c___back{transform:rotate(-45deg);}
+
+
+/* expand */
+.expand > span.t, .expand > span.b{
+	width: 1.5em;                    /* @button_size*2/3 */
+	height: 0.5em;
+	background-color: white;
+}
+.expand > span.t{
+	top: 0.2em;                      /* @expand_paddings */
+	right: 0.2em;
+	
+}
+.expand > span.b{
+	bottom: 0.2em;                   /* @expand_paddings */
+	left: 0.2em;
+}
+
+
+.expand > span.l, .expand > span.r{
+	width: 0.5em;                    /* @button_size*2/3 */
+	height: 1.5em;
+}
+.expand > span.l{
+	bottom: 0.2em;
+	left: 0.2em;
+}
+.expand > span.r{
+	right: 0.2em;
+	top: 0.2em;
+}
+
+
+
+
+
+
+.image_container{
+	transition: 1s;
+	width: 100%;
+	display:inline-block;	
+	z-index:-1;
+	
+}
+
+.slide{
+   background-color:lightgray;
+	
+   vertical-align: middle;
+
+	
+	max-height: 90vh;
+	max-width: 85%;                /*ie8*/  
+	max-width: 90vw; 
+	/*margin: 0 5vw 1em 5vw;          /* @на основе width */
+	margin-bottom: 1em;
+	
+	transition: 1s;
+	display: inline-block;
+
+}
+
+
+
+.slides{
+    position: absolute;
+    bottom: 0;
+    height: 2em;
+    width: 100%;
+    text-align: center;
+	 /*background-color: #dfd;*/
+
+}
+
+.slides a, .slides span{
+	vertical-align: top;
+	line-height: 2em;           
+	margin:10px;
+}
+.slides a:last-child, .slides a:first-child{
+	text-decoration:none;
+	top:-0.25em;
+	color:blue;
+}
+
+.slides span{
+	top:1px;
+	text-decoration: underline;
+	color:gray;
+}
+
+
+.back, .btn__next{
+	position: absolute;
+	top:0;
+	bottom:0;
+	margin:auto 0;
+	
+
+	height: 3em;               /* @slide_mve_btn_sz */
+	width: 3em;
+
+	
+	box-sizing: border-box;
+	padding: 0.12em;
+	padding-left: 0.3em;
+	
+	
+	border-radius: 1.5em;
+	cursor:pointer;	
+	background-color: lightblue;	
+	
+	transition: 0.5s;
+	opacity: 0.4;
+   
+	box-shadow: 0 0 15px 5px lightblue;
+}
+
+.back:hover, .btn__next:hover{
+	
+	opacity: 0.7;
+}
+
+.back:hover>.arrow, .btn__next:hover>.arrow{
+	
+	background-color: darkgray;
+}
+
+.btn__next{right:30px;}          /* @edge_offst */
+.back{
+	left :30px;
+	transform: rotate(180deg);
+}
+
+.back > .arrow, .btn__next > .arrow{
+	background-color: lightcyan;
+	height: 30px;
+	width: 10px;
+	border-radius:1em;
+	margin:auto;
+	transition: 1s;
+}
+.arrow.up{
+	transform: rotate(-45deg);
+   
+}
+.arrow.down{
+	transform: rotate(45deg);
+	top:-1em;
+}
+
