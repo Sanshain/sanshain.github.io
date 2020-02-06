@@ -65,6 +65,12 @@
 				back : true,
 				btn__next : true,		
             slide_id_prefix : 'slide_',
+				swipe : {
+				    now : false,
+					 start_margin : 0,    // тип - число (х-т %)
+					 onstart_x : 0,
+					 onstop_x : 0,
+				},
 				get_nextsource : function (_src_elem, _next_){
 				 
 					while(_src_elem){
@@ -300,8 +306,11 @@
 					    '.image_container'
 					);
 					
-				   var cur_id =
-					    slides[0].style.marginLeft.slice(1,-3);
+					
+					
+				   var cur_id = slider.swipe.now
+					    ? slider.swipe.start_margin / 100 
+					    : slides[0].style.marginLeft.slice(1,-3);
 				
 				
 				   cur_id = cur_id || 0;
@@ -320,6 +329,10 @@
 				 
 				}
 				
+            if (current || _cur == void 0){
+				
+				    console.warn(flag);
+				}
 
 				// для swipe:
 				var i_s = slider.image_load(
@@ -365,7 +378,7 @@
 				
 				slide.ondragstart = () => { return false;}
 				
-				var swipe_offset = 0;
+				//var swipe_offset = 0;
 				var swipped  = false;
 				var start_off__px = 0;
 				var start_off__perc = 0;
@@ -374,10 +387,14 @@
 				
 				var swipe_start = function (){
 				
-					 swipe_offset = (((event.touches || [])[0])     || event)
+				    // координаты x при касании:					 
+					 slider.swipe.onstart_x 
+					     = (((event.touches || [])[0])|| event)
  					 .screenX;
 					 
-					 console.log('start: '+ swipe_offset);
+					 console.log(
+					     'start: '+ slider.swipe.onstart_x
+				    );
 					 
 					 swipped = true;
 					 
@@ -387,7 +404,7 @@
 					 ); 
 
 					 // надо сначала получить в px:
-					 /*
+					 
 					 var cv = window.getComputedStyle(
 					     tuner
 						  
@@ -402,21 +419,29 @@
 					 
 					 _cv = _cv ? Number.parseInt(_cv) : 0;
 					 
-					 start_off__perc = _cv;				
+					 start_off__perc = _cv;		// obsolete
+					 slider.swipe.start_margin = _cv;
+					 slider.swipe.now = true;
+
+               tuner.style.transition = '0s';					 
 				};
 				
 				var swipe_end = function (){				
-				
-					 swipe_offset = swipe_offset - 
+				    
+					 //сумм отступ для левого края левого слайда:
+					 var swipe_offset = slider.swipe.onstart_x - 
 					   (((event.changedTouches||[])[0])||event)
 					 .screenX;
 					 
 					 console.log(event.screenX);
-					 console.log('off: '+swipe_offset);
+					 console.log('off: '+ swipe_offset);
 					 
 					 if (swipped && tuner){
 					 
-					     if (Math.abs(swipe_offset) > 50){
+					 
+					   tuner.style.transition = '1s'; //none?
+					 
+					   if (Math.abs(swipe_offset) > 50){
 						      
 								
 								//var sgn = Math.sign(swipe_offset);
@@ -435,37 +460,53 @@
 									 
 								// + добавляем новую картинку*/
 						  }
+						  
+
+						 
 					 }
 					 
 					 swipped = false;
 					 tuner = null;
 					 
-					 swipe_offset = 0;				
+					 slider.swipe.onstart_x = 0;		
+
+
+					 slider.swipe.start_margin = false;
+					 slider.swipe.now = false;					 
 				
 				};
 				
 				
 				
-				try
-				{
+
+				slide_leaf.addEventListener(
+					  'touchstart', swipe_start
+				);
 				
-				   slide_leaf.addEventListener(
-					     'touchstart', swipe_start
-					);
-				   slide_leaf.addEventListener(
-					     'touchend', swipe_end
-					);
-																
-				}
-				catch(err){
-				
-				   alert(1);
-					
-				}				
+				slide_leaf.addEventListener(
+					  'touchend', swipe_end
+				);
+			
 				
 				slide_leaf.onmousedown = swipe_start;
 				slide_leaf.onmouseup  = swipe_end;
+            slide_leaf.onmousemove = function (){
+				
+					if (!swipped || !tuner) return;		
 
+
+
+               var onstart_x = slider.swipe.onstart_x;
+
+  					var delta = onstart_x - event.screenX;
+
+
+               cv = (start_off__px - delta) + 'px';
+				   
+					tuner.style.marginLeft = cv;
+					 
+					 
+				};
 				   
 
 				
@@ -473,7 +514,12 @@
 			}
 			
 			
+			/*!
 			
+			     \vector:
+					  1 || void 0 - вперед
+					  -1 - назад
+			*/
 			var move_slide = function(vector){
 			
 			   vector = vector || 1;
@@ -482,13 +528,29 @@
 				   document.querySelector('.image_container');
 				
             slider.arrowAssing_for(current, !!(1+vector));
-								
-				var margin_offset = current.style.marginLeft;
 				
-				var addend = 
-				    Number.parseInt(margin_offset) || 0;
+
 				
-				var margin_value = addend - (vector)*100;
+				if (slider.swipe.now){
+				    
+					var margin_value = 
+					    slider.swipe.start_margin - (vector)*100;
+					
+				}
+				else{
+				
+					var margin_offset = current.style.marginLeft;
+					
+					var addend = 
+						 Number.parseInt(margin_offset) || 0;	
+				  
+				   var margin_value = addend - (vector)*100;
+				
+				}
+				
+
+				
+				
 				
 				if (margin_value > 0) {
 				
