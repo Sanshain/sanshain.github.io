@@ -455,6 +455,16 @@
 					 
 				};	
 				
+				if ('ontouchstart' in window) {
+				
+				   slide_leaf.addEventListener(
+					     'touchstart', slide_leaf.onmousedown
+					);
+				   slide_leaf.addEventListener(
+					     'touchend', slide_leaf.onmouseup
+					);
+																
+				}
 				
             return true;				
 			}
