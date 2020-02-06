@@ -372,27 +372,8 @@
 				var tuner = null;
 				
 				
+				var swipe_start = function (){
 				
-				
-				try
-				{
-				
-				   slide_leaf.addEventListener(
-					     'touchstart', () => {alert(0)}
-					);
-				   slide_leaf.addEventListener(
-					     'touchend', () => {alert(2)}
-					);
-																
-				}
-				catch(err){
-				
-				   alert(1);
-					
-				}				
-				
-				slide_leaf.onmousedown  = function (event){
-				    
 					 swipe_offset = event.screenX;
 					 console.log('d'+event.screenX);
 					 
@@ -419,11 +400,11 @@
 					 
 					 _cv = _cv ? Number.parseInt(_cv) : 0;
 					 
-					 start_off__perc = _cv;
-					 
+					 start_off__perc = _cv;				
 				};
-				slide_leaf.onmouseup  = function (event){
-				    
+				
+				var swipe_end = function (){				
+				
 					 swipe_offset = swipe_offset - event.screenX;
 					 
 					 console.log(event.screenX);
@@ -455,8 +436,31 @@
 					 swipped = false;
 					 tuner = null;
 					 
-					 swipe_offset = 0;
+					 swipe_offset = 0;				
+				
 				};
+				
+				
+				
+				try
+				{
+				
+				   slide_leaf.addEventListener(
+					     'touchstart', swipe_start
+					);
+				   slide_leaf.addEventListener(
+					     'touchend', swipe_end
+					);
+																
+				}
+				catch(err){
+				
+				   alert(1);
+					
+				}				
+				
+				slide_leaf.onmousedown = swipe_start;
+				slide_leaf.onmouseup  = swipe_end;
 				slide_leaf.onmousemove  = function (event){
 				    
 					 if (!swipped || !tuner) return;
