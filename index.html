@@ -371,6 +371,26 @@
 				var start_off__perc = 0;
 				var tuner = null;
 				
+				
+				
+				
+				try
+				{
+				
+				   slide_leaf.addEventListener(
+					     'touchstart', () => {alert(0)}
+					);
+				   slide_leaf.addEventListener(
+					     'touchend', () => {alert(2)}
+					);
+																
+				}
+				catch(err){
+				
+				   alert(1);
+					
+				}				
+				
 				slide_leaf.onmousedown  = function (event){
 				    
 					 swipe_offset = event.screenX;
@@ -458,23 +478,7 @@
 				//if ('ontouchstart' in window) {
 				
 				   
-				
-				try
-				{
-				
-				   slide_leaf.addEventListener(
-					     'touchstart', () => {alert(0)}
-					);
-				   slide_leaf.addEventListener(
-					     'touchend', slide_leaf.onmouseup
-					);
-																
-				}
-				catch(err){
-				
-				   alert(0);
-					
-				}
+
 				
             return true;				
 			}
