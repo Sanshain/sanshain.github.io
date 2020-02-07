@@ -678,10 +678,6 @@ function move_enable(btn){
 	}, 500);	
 }			
 
-window.onload = function (){
-	alert(screen.width);
-	document.querySelector('input').value = screen.width;
-}
 
 function slider_close(){
 	 
