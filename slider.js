@@ -122,6 +122,39 @@ var slider = {
 
       return null;		
 	},
+	create_new_slide_by : function (current, flag){
+		
+		if (current && !flag){               // back
+		
+			// добавляем новый контейнер в начало
+		
+			 var slide_leaf = 
+				  Elem('div','', 'image_container');
+			 
+			 slide_leaf.style.marginLeft = '-100%';
+			 
+			 var parent = current.parentElement;
+			 
+			 parent.insertBefore(slide_leaf, current);
+			 
+		}
+		else if (flag || flag == void 0){
+			
+			// init || next
+			
+			// добавляем новый контейнер в конец
+			
+			var slide_leaf = vom.add(
+				  '.slide_container',
+				  'div',
+				  'image_container');
+				  
+			
+		}		
+		
+		return slide_leaf;
+		
+	},
 	arrowAssing_for : function (_src_elem, _next){
 		
 		if (typeof _next == typeof true){
@@ -349,7 +382,7 @@ var load_slide_by = function(current, flag){
 		 var has_next = slider._check_next_slide();
 		 if (has_next == true) return true;
 	}
-   // для back - проверяется внутри move_slide
+   // для back - проверяется внутри `move_slide` заранее 
 	  
 
 	// для swipe:
@@ -368,32 +401,8 @@ var load_slide_by = function(current, flag){
 	if (!i_s) return false;				
 	
 	
-	if (current && !flag){               // back
 	
-		// добавляем новый контейнер в начало
-	
-		 var slide_leaf = 
-			  Elem('div','', 'image_container');
-		 
-		 slide_leaf.style.marginLeft = '-100%';
-		 
-		 var parent = current.parentElement;
-		 
-		 parent.insertBefore(slide_leaf, current);
-		 
-	}
-	else if (flag || flag == void 0){             					
-		// init || next
-		
-		// добавляем новый контейнер в конец
-		
-		var slide_leaf = vom.add(
-			  '.slide_container',
-			  'div',
-			  'image_container');
-			  
-		
-	}
+	var slide_leaf=slider.create_new_slide_by(current, flag);
 	
 	var slide = vom.add(slide_leaf,'img','slide');
 				
@@ -401,6 +410,12 @@ var load_slide_by = function(current, flag){
 	slide_leaf.id = i_s.id;
 	
 	slide.ondragstart = () => { return false;}
+	
+	
+	
+	
+	// swiper:
+	
 	
 	//var swipe_offset = 0;
 	var swipped  = false;
@@ -421,6 +436,7 @@ var load_slide_by = function(current, flag){
 		 );
 		 
 		 swipped = true;
+		 slider.swipe.now = true;
 		 
 		 
 		 tuner = document.querySelector(
@@ -445,7 +461,7 @@ var load_slide_by = function(current, flag){
 		 
 		 start_off__perc = _cv;		// obsolete
 		 slider.swipe.start_margin = _cv;
-		 slider.swipe.now = true;
+		 
 
 		 tuner.style.transition = '0s';					 
 	};
