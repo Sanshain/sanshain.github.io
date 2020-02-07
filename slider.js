@@ -490,7 +490,7 @@ var load_slide_by = function(current, flag){
 		 
 		 if (swipped && tuner){
 
-         // не заметил разницы, но работает в целом сносно:
+         // не заметил разницы (вероятно, потому, что моб браузер закэшировал. так что лучше перепроверить), но вроде этот работает сносно:
 
 			var leftover_time = 300;
 			    // Math.round((1-Math.abs(swipe_offset)/screen.width)*1000);
