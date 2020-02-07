@@ -1,3 +1,14 @@
+function Elem(type_name, txt, css_cls){		
+	var elem = document.createElement(type_name);	
+	elem.innerText = txt;	//value
+	
+	if (css_cls) {
+		elem.className = css_cls;
+	}
+	
+	return elem;	
+}
+
 vom = {};
 vom.add = function(container, elem, cls){
 
@@ -16,16 +27,7 @@ vom.add = function(container, elem, cls){
 	return elem;		
 };
 
-function Elem(type_name, txt, css_cls){		
-	var elem = document.createElement(type_name);	
-	elem.innerText = txt;	//value
-	
-	if (css_cls) {
-		elem.className = css_cls;
-	}
-	
-	return elem;	
-}
+
 
 
 
@@ -74,6 +76,51 @@ var slider = {
 		return null;
 	 
 	},				
+	__check_next_slide : function (current){
+		
+		/*!
+		    
+			 вернет _cur текущий слайд, если необходимо
+			 подгрузить следующий
+		*/
+		
+		if (!current){
+			// то проверяем, если след слайд:
+		
+			// берем все слайды:
+			var slides = document.querySelectorAll(
+				 '.image_container'
+			);
+			
+			
+			// получаем id текущего слайда:
+			var cur_id = slider.swipe.now
+				 ? slider.swipe.start_margin / 100 
+				 : slides[0].style.marginLeft.slice(1,-3);
+		
+			// он может быть не найден, если не было переходов (0)
+			cur_id = cur_id || 0;
+			 
+			// получаем текущий слайд:
+			var _cur = slides[cur_id];
+		
+			// проверяем, есть ли следующий:
+			var _next = (_cur || {}).nextSibling;
+			
+			// если есть, то он уже создан и его создавать не надо
+			if (_next){						
+				
+				// выходим:
+				return true; // если он есть, то true
+			} else return _cur;     
+			//else continue next code executing:
+			//for load img				
+		}
+		
+
+
+      return null;		
+	}
 	arrowAssing_for : function (_src_elem, _next){
 		
 		if (typeof _next == typeof true){
@@ -157,7 +204,7 @@ var slider = {
 		},25);
 			 
 	},
-	/*!
+	/*! Получение данных для нового слайда:
 		 slide_id - id текущего слайда  
 		 flag - флаг направления:
 			  true - вперед
@@ -165,32 +212,36 @@ var slider = {
 			  undefined - текущий (первый запуск)
 		 
 		 image_load - возвращает id и src для 
-			  текущего слайда либо false, если больше слайдов нет
+			  нового (следующего либо первого) слайда либо false, если больше слайдов нет
+		 
+		 а так же делает проверку стрелок для нового слайдера
+		 для существующего проверки происх в move_slide
 		 
 	*/
 	image_load : function (slide_id, flag){
 		 
 		 
-		// demo: 
-		/*
+		/* demo: 
 		if (flag == void 0)
 			return {
 				src : slide_id 
 					? 'back.jpg'
 					: 'sample.png',
 				id : 'default'
-			};						//*/  
+			};//*/  
 		 
 
 		 
 		 // practic:	 
 		 
+		 //если задано направление (вперед/назад)
 		 if (flag != void 0){
-			 //если задано направление
+			 
 		 
-		 
+		    // берем номер из id текущего слайда
 			 var num = slide_id.match(/\d+/).pop();
 			 
+			 // получаем источник для текущего слайда
 			 var src_elem = document.getElementById(
 				  this.source_id_prefix + num
 			 );					 
@@ -201,13 +252,13 @@ var slider = {
 			 //Если элементы имеют общего root, то
 			 
 			 
-			 
+			 // получаем направление
 			 var next = flag 
 				  ? 'nextSibling' 
 				  : 'previousSibling';
 			 
 
-			 
+			// получаем источник для нового (следующего) слайда
 			src_elem = slider.get_nextsource(
 				  src_elem,
 				  next
@@ -221,6 +272,7 @@ var slider = {
 			  
 			  // если не задано, то init
 			  
+			  // получаем источник для нового (первого) слайда
 			  src_elem = document.getElementById(
 					slide_id
 			  );
@@ -244,18 +296,20 @@ var slider = {
 		 else return false;
 		 
 		 
-	},
+	}/*,
+	
 	__ontouch : function (elem){
 	
 	},
 	onswipe : function (){
 	
-	}
+	}//*/
+   
 }
 
 
 
-function image_expand(){			   
+slider.expand = function(){			   
  
 	var slide= document.querySelector('.slide');
 
@@ -287,50 +341,32 @@ function image_expand(){
 var load_slide_by = function(current, flag){
 
 	// здесь возможна предзагрузка
+	 __check_next_slide()
 	
-	if (!current){
-	
-		var slides = document.querySelectorAll(
-			 '.image_container'
-		);
-		
-		
-		
-		var cur_id = slider.swipe.now
-			 ? slider.swipe.start_margin / 100 
-			 : slides[0].style.marginLeft.slice(1,-3);
-	
-	
-		cur_id = cur_id || 0;
+	// если вперед:
+	if (!current) {
 		 
-		var _cur = slides[cur_id];
-	
-		var _next = (_cur || {}).nextSibling;
-			 
-		if (_next){						
-			
-			return true; // если он есть, то true
-		}               
-		//else continue next code executing:
-		//for load img				
-		
-	 
+		 var has_next = __check_next_slide();
+		 if (has_next == true) return true;
 	}
-	
-	if (current || _cur == void 0){
-	
-		 console.warn(flag);
-	}
+   // для back - проверяется внутри move_slide
+	  
 
 	// для swipe:
+	
+	// загружаем изображение:
+	// (точнее получаем информацию о след изображении)
 	var i_s = slider.image_load(
-		 (current || _cur).id,
+		 (current || has_next).id,
 		 (current && flag) 
 			  ? (void 0)                 // init
 			  : !current ? true : false  // next:back
 	);
 	
+	
+	// если его нет, то выходим:
 	if (!i_s) return false;				
+	
 	
 	if (current && !flag){               // back
 	
@@ -481,18 +517,10 @@ var load_slide_by = function(current, flag){
 	};				
 	
 
-	slide_leaf.addEventListener(
-		  'touchstart', swipe_start
-	);
+	slide_leaf.addEventListener('touchstart', swipe_start);
+	slide_leaf.addEventListener('touchend', swipe_end);
+	slide_leaf.addEventListener('touchmove', swipe_move);
 	
-	slide_leaf.addEventListener(
-		  'touchend', swipe_end
-	);
-	
-	slide_leaf.addEventListener(
-		  'touchmove', swipe_move
-	);				
-
 	
 	slide_leaf.onmousedown = swipe_start;
 	slide_leaf.onmouseup  = swipe_end;
@@ -505,7 +533,10 @@ var load_slide_by = function(current, flag){
 
 
 /*!
-
+      
+	  * назначает новое значение marginLeft для крайнего сл.
+	  * совершает проверку стрелки (через проверку внутри arrowAssing_for след слайда в источнике)
+		
 	  \vector:
 		  1 || void 0 - вперед
 		  -1 - назад
@@ -517,18 +548,21 @@ var move_slide = function(vector){
 	var current= 
 		document.querySelector('.image_container');
 	
+	// проверка стрелки
 	slider.arrowAssing_for(current, !!(1+vector));
 	
 
-	
+	// если режим свайпа:
 	if (slider.swipe.now){
-		 
+		
+		// берем значение margin из свайпа +- ширина слайда
 		var margin_value = 
 			 slider.swipe.start_margin - (vector)*100;
 		
 	}
 	else{
 	
+	   // иначе просто прибавляем к текущему значению
 		var margin_offset = current.style.marginLeft;
 		
 		var addend = 
@@ -541,8 +575,10 @@ var move_slide = function(vector){
 
 	
 	
-	
+	// сдвигать правее при отсутствии слайда нельзя
 	if (margin_value > 0) {
+	
+	   current.style.marginLeft = '0%';
 	
 		return false;
 	}
