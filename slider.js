@@ -24,7 +24,8 @@ vom.add = function(container, elem, cls){
 	
 	container.appendChild(elem);
 	
-	return elem;		
+	return elem;
+	
 };
 
 
@@ -76,7 +77,7 @@ var slider = {
 		return null;
 	 
 	},				
-	__check_next_slide : function (current){
+	_check_next_slide : function (current){
 		
 		/*!
 		    
@@ -120,7 +121,7 @@ var slider = {
 
 
       return null;		
-	}
+	},
 	arrowAssing_for : function (_src_elem, _next){
 		
 		if (typeof _next == typeof true){
@@ -341,12 +342,11 @@ slider.expand = function(){
 var load_slide_by = function(current, flag){
 
 	// здесь возможна предзагрузка
-	 __check_next_slide()
 	
 	// если вперед:
 	if (!current) {
 		 
-		 var has_next = __check_next_slide();
+		 var has_next = slider._check_next_slide();
 		 if (has_next == true) return true;
 	}
    // для back - проверяется внутри move_slide
