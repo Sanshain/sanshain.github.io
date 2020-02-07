@@ -490,9 +490,12 @@ var load_slide_by = function(current, flag){
 		 console.log('off: '+ swipe_offset);
 		 
 		 if (swipped && tuner){
+		   
+			var leftover_time = 500;
 		 
+		   tuner.style.transition = '0.'+ leftover_time +'s';
 		 
-			tuner.style.transition = screen.width > 500 ? '1s': '0.3s'; //none?
+			//tuner.style.transition = screen.width > 500 ? '1s': '0.5s'; //none?
 		 
 			if (Math.abs(swipe_offset) > 1){ // 50
 					
@@ -526,6 +529,14 @@ var load_slide_by = function(current, flag){
 
 			 
 		 }
+		 
+		 setTimeout(function (){
+			 
+			 tuner.style.transition = null;
+			 
+		 }, leftover_time);
+		 
+		 
 		 
 		 swipped = false;
 		 tuner = null;
