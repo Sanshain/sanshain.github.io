@@ -657,7 +657,7 @@ function mover_disable(btn){
 	setTimeout(function (){
 		
 	   btn.style.display = 'none';		
-	}, 500);
+	}, screen.width > 500 ? 0 : 500);
 
 }
 
@@ -675,7 +675,7 @@ function move_enable(btn){
 	setTimeout(function (){
 		
 	   btn.style.opacity = "0.4";		
-	}, 500);	
+	}, screen.width > 500 ? 0 : 500);	
 }			
 
 
