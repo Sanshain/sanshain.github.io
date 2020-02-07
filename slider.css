@@ -4,6 +4,26 @@
 	padding: 0;
 }
 
+.img_src{
+	text-align:center;
+	margin-top: 40vh;
+}
+.img_src>img{
+	transition:0.5s;
+	margin:25px;
+	cursor:pointer;
+	box-shadow: 0 0 5px 5px lightblue;
+}
+.img_src>img:hover{
+	box-shadow: 0 0 15px 8px lightblue;
+}
+
+.footer{
+	display:block;
+	text-align:center;
+}
+
+
 .slide_container{
 
 	position:fixed;

@@ -17,14 +17,32 @@
 
 	<body>
 	
-	   <img src="sample.png" alt="" id="src_1" 
-		    onclick=slider.init(this)
-		    height=50
-			 width=100 />
-	   <img src="back.jpg" alt="" id="src_2" 
-		    onclick=slider.init(this)
-		    height=50
-			 width=100 />			 
+	   <div class="img_src">
+		
+			<img src="sample.png" alt="" id="src_1" 
+			    tabindex=0
+				 onclick=slider.init(this)
+				 height=50
+				 width=100 />
+			<img src="back.jpg" alt="" id="src_2"	
+             tabindex: 1			
+				 onclick=slider.init(this)
+				 height=50
+				 width=100 />	
+				 
+
+		
+				 
+		</div>
+	
+      <div class="footer">
+		
+			<a href="https://sanshain.github.io/" class='footer'>
+				 origin
+			</a>		
+			
+		</div>
+			 
 	
 		<div class="slide_container">
 				   
@@ -77,7 +95,6 @@
 			
 		</div>
 		
-
 
 	</body>
 
