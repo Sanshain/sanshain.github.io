@@ -158,6 +158,14 @@ button.expand{
 	
 }
 
+@media screen and (max-width: 800px){
+	
+	.image_container{
+		transition: 1s;
+		
+	}	
+}
+
 .slide{
    background-color:lightgray;
 	
