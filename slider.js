@@ -679,7 +679,7 @@ function move_enable(btn){
 }			
 
 window.onload = function (){
-	
+	alert(screen.width);
 	document.querySelector('input').value = screen.width;
 }
 
