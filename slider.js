@@ -491,7 +491,7 @@ var load_slide_by = function(current, flag){
 		 
 		 if (swipped && tuner){
 
-			var leftover_time = 300;
+			var leftover_time = 999;
 			    // Math.round((1-Math.abs(swipe_offset)/screen.width)*1000);
 		 
 		   //console.log(leftover_time);
