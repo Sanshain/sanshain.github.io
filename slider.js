@@ -80,9 +80,17 @@ var slider = {
 	_check_next_slide : function (current){
 		
 		/*!
-		    
-			 вернет _cur текущий слайд, если необходимо
-			 подгрузить следующий
+		    current - либо текущий слайд  (при back)
+			         - либо undefined      (при next)
+		
+		    \brief проверяет, загружен ли следующий слайд
+			 
+			 вернет:
+			   - _cur текущий слайд, если необходимо
+			      подгрузить следующий
+				- true - если уже есть
+				- null - в ином (непредусмотренном) случае
+			 
 		*/
 		
 		if (!current){
@@ -275,6 +283,8 @@ var slider = {
 		    // берем номер из id текущего слайда
 			 var num = slide_id.match(/\d+/).pop();
 			 
+			 //if (num == void 0) return false;
+			 
 			 // получаем источник для текущего слайда
 			 var src_elem = document.getElementById(
 				  this.source_id_prefix + num
@@ -379,6 +389,7 @@ var load_slide_by = function(current, flag){
 	// если вперед:
 	if (!current) {
 		 
+		 // has_next - текущий слайд, если надо подгрузить следующий слайд. true - если он уже есть
 		 var has_next = slider._check_next_slide();
 		 if (has_next == true) return true;
 	}
@@ -386,6 +397,8 @@ var load_slide_by = function(current, flag){
 	  
 
 	// для swipe:
+	
+	if (!(current || has_next)) return false;
 	
 	// загружаем изображение:
 	// (точнее получаем информацию о след изображении)
@@ -492,7 +505,9 @@ var load_slide_by = function(current, flag){
 					if (swipe_offset > 0) succ = next_slide();
 					else {
 						 
-						 back_slide();
+						 back_slide(document.querySelector(
+						     '.back'
+						 ));
 					}
 					
 					if (!succ) {
@@ -635,6 +650,7 @@ function next_slide(){
 function back_slide(btn) {
 	 if (!move_slide(-1)){
 	 
+	      // если след слайда нет, то
 			var current= 
 				document.querySelector(  
 					 '.image_container'
