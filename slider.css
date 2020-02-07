@@ -185,7 +185,9 @@ button.expand{
 	}	
 	
 	.slide{
-		
+
+		max-height: 100vh;
+		max-width: 100vw; 		
 	}
 }
 
