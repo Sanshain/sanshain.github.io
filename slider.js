@@ -653,7 +653,12 @@ function mover_disable(btn){
 	}
 	
 	slider[btn.className] = false;
-	btn.style.display = 'none';
+	btn.style.opacity = '0';
+	setTimeout(function (){
+		
+	   btn.style.display = 'none';		
+	}, 500);
+
 }
 
 function move_enable(btn){
@@ -665,7 +670,18 @@ function move_enable(btn){
 	
 	slider[btn.className] = true;
 	btn.style.display = 'block';
+	
+	
+	setTimeout(function (){
+		
+	   btn.style.opacity = "0.4";		
+	}, 500);	
 }			
+
+window.onload = function (){
+	
+	document.querySelector('input').value = screen.width;
+}
 
 function slider_close(){
 	 
