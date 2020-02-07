@@ -435,7 +435,7 @@ var load_slide_by = function(current, flag){
 			  'start: '+ slider.swipe.onstart_x
 		 );
 		 
-		 swipped = true;
+		 swipped = true;            // obsolete
 		 slider.swipe.now = true;
 		 
 		 
@@ -468,7 +468,7 @@ var load_slide_by = function(current, flag){
 	
 	var swipe_end = function (){				
 		 
-		 //сумм отступ для левого края левого слайда:
+		 //разница в пкс между нажатием и отпусканием:
 		 var swipe_offset = slider.swipe.onstart_x - 
 			(((event.changedTouches||[])[0])||event)
 		 .screenX;
@@ -479,20 +479,27 @@ var load_slide_by = function(current, flag){
 		 if (swipped && tuner){
 		 
 		 
-			tuner.style.transition = '1s'; //none?
+			tuner.style.transition = screen.width > 500 ? '1s': '0.3s'; //none?
 		 
-			if (Math.abs(swipe_offset) > 50){
+			if (Math.abs(swipe_offset) > 1){ // 50
 					
 					
 					//var sgn = Math.sign(swipe_offset);
 					//if (!sgn) return;//*/
 					
-					if (swipe_offset > 0) next_slide();
+					var succ = true;
+					
+					if (swipe_offset > 0) succ = next_slide();
 					else {
 						 
 						 back_slide();
 					}
 					
+					if (!succ) {
+						
+						tuner.style.marginLeft =
+						   slider.swipe.start_margin+ '%';
+					}
 					
 					/*
 					tuner.style.marginLeft = 
@@ -618,9 +625,11 @@ function next_slide(){
 			  );
 	}
 	else{
-	
+	    return false;
 	}
-		
+	
+	return true;
+	
 }
 
 function back_slide(btn) {
