@@ -355,7 +355,13 @@ var slider = {
 
 slider.expand = function(){			   
  
-	var slide= document.querySelector('.slide');
+   // здесь нужно получить текущий слайд:
+	
+	var slides = document.querySelectorAll('.slide');
+	
+	var sid = slides[0].style.marginLeft.slice(1,-3) || 0;
+ 
+	var slide = slides[sid];
 
 	var fullOnScreen = slide.requestFullScreen
 	  || slide.webkitRequestFullScreen
