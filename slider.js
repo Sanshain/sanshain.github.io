@@ -56,6 +56,9 @@ var slider = {
 	back : true,
 	btn__next : true,		
 	slide_id_prefix : 'slide_',
+	key_nav : true,
+	container : 'slide_container',
+	             // or dom.get('.slide_container')
 	swipe : {
 		 now : false,
 		 start_margin : 0,    // тип - число (х-т %)
@@ -238,13 +241,21 @@ var slider = {
 			'.slide_container'
 		);					
 		
+		this.container = _slider;
+		
 		_slider.style.display = 'block';
 		
 		setTimeout(function (){
 			 
 			_slider.style.opacity = '1';
+			
 		},25);
-			 
+		
+		if (slider.key_nav) {
+			
+			_slider.focus();
+		}
+		
 	},
 	/*! Получение данных для нового слайда:
 		 slide_id - id текущего слайда  
@@ -329,7 +340,7 @@ var slider = {
 		 if (src_elem && src_elem.id){
 			
 			var num = src_elem.id.match(/\d+/).pop();			
-			src_elem.focus();
+			//src_elem.focus();
 			
 			return {
 				 id : this.slide_id_prefix + num, 
@@ -371,6 +382,32 @@ slider.expand = function(){
 	if (fullOnScreen) fullOnScreen.call(slide);
 	
 }
+
+slider.onkey = function(event){
+	
+	if (event.key == "Escape"){
+      
+				
+		var time_span = 0.6; // sec
+		
+		this.container.style.transition = time_span + 's';
+		//*/	
+		
+		slider_close(time_span * 1000);	
+		
+		
+		
+		setTimeout((function (){
+			
+			this.container.style.transition = null;
+			
+		}).bind(this), time_span * 1000);
+		//*/
+	}
+	
+}
+
+
 
 // load_slide_by();
 
@@ -726,7 +763,10 @@ function move_enable(btn){
 }			
 
 
-function slider_close(){
+
+function slider_close(time_span){
+	 
+	 time_span = time_span || 1000;
 	 
 	 var _slider = document.querySelector(
 		  '.slide_container'
@@ -751,5 +791,9 @@ function slider_close(){
 			 _slider.removeChild(slides[i]);
 		};	
 		
-	 }, 1000);
+	 }, time_span);
+	 
+	 if (_slider.key_nav) _slider.blur();
 }
+
+
