@@ -368,7 +368,7 @@ slider.expand = function(){
  
    // здесь нужно получить текущий слайд:
 	
-	var slides = document.querySelectorAll('.slide');
+	var slides=document.querySelectorAll('.image_container');
 	
 	var sid = slides[0].style.marginLeft.slice(1,-3) || 0;
  
@@ -379,7 +379,9 @@ slider.expand = function(){
 	  || slide.mozRequestFullScreen
 	  || slide.msRequestFullScreen;
 
-	if (fullOnScreen) fullOnScreen.call(slide);
+   var i_slide = slide.querySelector('img');
+
+	if (fullOnScreen) fullOnScreen.call(i_slide);
 	
 }
 
