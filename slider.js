@@ -387,8 +387,8 @@ slider.onkey = function(event){
 	
 	if (event.key == "Escape"){
       
-				
-		var time_span = 0.6; // sec
+			
+		var time_span = 0.9; // sec
 		
 		this.container.style.transition = time_span + 's';
 		//*/	
@@ -403,6 +403,14 @@ slider.onkey = function(event){
 			
 		}).bind(this), time_span * 1000);
 		//*/
+	}
+	else if(event.code == "ArrowRight"){
+		
+		next_slide();
+	}
+	else if(event.code == "ArrowLeft"){
+
+      back_slide();
 	}
 	
 }
