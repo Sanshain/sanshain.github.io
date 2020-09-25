@@ -1,3 +1,3 @@
 # sanshain.github.io
 
-[sample](#https://sanshain.github.io)
+[sample](http://sanshain.github.io)
