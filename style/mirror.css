@@ -1,0 +1,36 @@
+.mirror {
+    opacity: .75;
+}
+
+.mirror div {
+    height: 350px;
+    cursor: pointer;
+    transition: .6s linear;
+    text-align: center;
+    font-size: xx-large;
+}
+
+.mirror h3 {
+    padding-top: 1em;
+    height: auto;
+}
+
+.front {
+    background-color: #0099ff;
+}
+
+.back {
+    background-color: #339999;
+}
+
+.reverse {
+    display: none;
+}
+
+.front>div,
+.back>div {
+    background-color: lightgreen;
+    height: 50px;
+    width: 500px;
+    margin: auto;
+}

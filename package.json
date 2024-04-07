@@ -1,0 +1,19 @@
+{
+  "name": "sanshain.github.io",
+  "version": "1.0.0",
+  "description": "[sample](http://sanshain.github.io)",
+  "main": "script.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp-imagemin": "^9.0.0",
+    "imagemin": "^8.0.1",
+    "imagemin-jpegtran": "^7.0.0",
+    "imagemin-pngquant": "^9.0.2"
+  }
+}
