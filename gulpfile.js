@@ -18,12 +18,13 @@ gulp.task('less', function () {
 
 
 gulp.task('build', function () {
-    return gulp.src('source/index.html')
+    return gulp.src('source/**/index.html')
         .pipe(include()).on(
             'error', console.log
         )
         .pipe(gulp.dest('.'))
 });
+
 
 gulp.task('watch', function () {
     

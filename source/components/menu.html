@@ -5,11 +5,20 @@
     <div class="line"></div>
 </div>
 <div class="menu">    
-    <div class="point">Home</div>
-    <div class="point">Home</div>
-    <div class="point">Home</div>
+    <a class="point" href="/">Home</a>
+    <a class="point" href="/pages/slider">Slider</a>
+    <a class="point"  href="/pages/preloader">Loader</a>
     <div class="point">Home</div>
     <div class="point">Page</div>
     <div class="close"></div>
 </div>
 <div class="background"></div>
+
+<script>
+    document.querySelector('.menu').onclick = (e) => {        
+        e.preventDefault();        
+        setTimeout(() => {
+            document.location = e.target.href
+        }, 300)
+    }
+</script>

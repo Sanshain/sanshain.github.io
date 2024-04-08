@@ -7,10 +7,15 @@
 
 		
 		<link rel="stylesheet" href="wait.css" />
-		
+		<link rel="stylesheet" href="/style/menu.css">
 
 		<style>
-	
+			#container{
+				background-color: #4eb5fa;
+				/* min-height: 100%;
+				position: fixed;
+				width: 100%; */
+			}
 		</style>
 
 		<script>
@@ -310,22 +315,6 @@
 				
 			}
 			
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
-
 			function animate_start(elem){
 			
 				var anim = 
@@ -379,11 +368,59 @@
 
 	<body>
 		
-		<div id="container" onclick='animation.start(this)'>
-
+		<div id="container" onclick='animation.start(this)'></div>
+		
+		<div class="hamburger" tabindex="0">
+		
+		    <div class="line"></div>
+		
+		    <div class="line"></div>
+		
+		    <div class="line"></div>
+		
+		    <div class="line"></div>
+		
 		</div>
 		
+		<div class="menu">    
+		
+		    <a class="point" href="/">Home</a>
+		
+		    <a class="point" href="/pages/slider">Slider</a>
+		
+		    <a class="point"  href="/pages/preloader">Loader</a>
+		
+		    <div class="point">Home</div>
+		
+		    <div class="point">Page</div>
+		
+		    <div class="close"></div>
+		
+		</div>
+		
+		<div class="background"></div>
+		
+		
+		
+		<script>
+		
+		    document.querySelector('.menu').onclick = (e) => {        
+		
+		        e.preventDefault();        
+		
+		        setTimeout(() => {
+		
+		            document.location = e.target.href
+		
+		        }, 300)
+		
+		    }
+		
+		</script>
 
+		<script>
+			animation.start(container)
+		</script>
 	</body>
 
 </html>

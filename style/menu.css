@@ -5,7 +5,7 @@
   height: 2em;
   width: 2em;
   position: absolute;
-  right: 1em;
+  top: 0.54em;
   z-index: 6;
 }
 .line {
@@ -61,6 +61,9 @@
   background-color: #b2c6ebdd;
   opacity: 0;
 }
+.menu .point:visited {
+  color: #333;
+}
 .menu .point:hover {
   background-color: #b2c6ebee;
   text-decoration: underline;
@@ -85,7 +88,11 @@
   box-shadow: 0 0 15px gray;
 }
 .hamburger:focus + .menu .close {
-  border: 1px solid lightgray;
+  transition: 0.5s;
+}
+.hamburger:focus + .menu .close:hover {
+  box-shadow: 0 0 15px #dddd;
+  cursor: pointer;
 }
 .hamburger:focus + .menu .point {
   opacity: 1;
@@ -99,7 +106,7 @@
   pointer-events: none;
 }
 .hamburger:focus .line {
-  background-color: #555;
+  background-color: #666;
 }
 .hamburger:focus .line:nth-child(even) {
   opacity: 0;

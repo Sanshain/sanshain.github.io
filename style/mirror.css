@@ -1,5 +1,12 @@
 .mirror {
     opacity: .75;
+
+    /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;    ; */
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+    /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+    /* font-family: Arial, Helvetica, sans-serif; */
+    
 }
 
 .mirror div {
@@ -12,7 +19,10 @@
 
 .mirror h3 {
     padding-top: 1em;
-    height: auto;
+    height: auto;     
+
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;       
+    color: #111;
 }
 
 .front {

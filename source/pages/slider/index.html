@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="slider.css">
+	<link rel="stylesheet" href="/style/menu.css">
+
+	<script src="slider.js"></script>
+	<style>
+		body{
+			background-color: #4eb5fa;
+			min-height: 100%;
+			position: fixed;
+			width: 100%;			
+		}		
+	</style>
+
+</head>
+
+<body>
+
+	<div class="img_src">
+
+		<img src="sample.png" alt="" id="src_1" tabindex=0 onclick=slider.init(this) height=50 width=100 />
+		<img src="back.jpg" alt="" id="src_2" tabindex=1 onclick=slider.init(this) height=50 width=100 />
+
+	</div>
+
+	<div class="footer">
+
+		<a href="https://github.com/Sanshain/sanshain.github.io" class='footer'>origin</a>
+		<a href="/preload/" class='footer'>preloader</a>
+
+	</div>
+
+	<div class="slide_container" onkeydown='slider.onkey(event)' tabindex=3>
+
+		<button class="expand" onclick='slider.expand()'>
+			<span class="t"></span>
+			<span class="r"></span>
+			<span class="l"></span>
+			<span class="b"></span>
+		</button>
+
+		<div class="back" onclick='back_slide(this)'>
+
+			<div class="arrow up"></div>
+			<div class="arrow down"></div>
+
+		</div>
+
+
+
+
+		<!--
+         <div class="image_container" id='prime_slide'>
+			    <img class="slide" src="sample.png" alt="">	
+		 </div>			
+		-->
+
+		<div class="btn__next" onclick='next_slide(this)'>
+
+			<div class="arrow up"></div>
+			<div class="arrow down"></div>
+
+		</div>
+
+
+		<div class="slides">
+			<a href="">...</a>
+			<a href="">1</a>
+			<a href="">2</a>
+			<span>18</span>
+			<a disabled href="">3</a>
+			<a href="">4</a>
+			<a href="">...</a>
+		</div>
+
+		<button class="close" onclick='slider_close()'>
+			<span class="c__right"></span>
+			<span class="c___back"></span>
+		</button>
+
+	</div>
+
+	<!--=include "../../components/menu.html" -->
+
+</body>
+
+</html>

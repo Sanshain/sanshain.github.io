@@ -8,8 +8,8 @@
     height: 2em;
     width: 2em;
     position: absolute;
-    right: 1em;
-    // top: 2em;
+    // right: 1em;
+    top: .54em;
     z-index: 6;
 }
 
@@ -90,6 +90,10 @@
         
         opacity: 0;   
 
+        &:visited{
+            color: #333;
+        }
+
         &:hover{
             
             background-color: #b2c6ebee;  
@@ -102,6 +106,10 @@
         }
     }
 }
+
+
+/// background:
+
 
 .background{
     position: fixed;
@@ -117,8 +125,8 @@
 }
 
 
+/// interaction:
 
-// interaction:
 
 .hamburger:focus+.menu{
     // border: 1px solid gray;
@@ -128,8 +136,16 @@
     z-index: 5;
     box-shadow: 0 0 15px gray;
 
-    .close{
-        border: 1px solid lightgray;        
+    .close{        
+        transition: .5s;
+        &:hover{
+            // border: 1px solid gray;   
+            box-shadow: 0 0 15px #dddd;
+            cursor: pointer;
+        }
+        // border: 1px solid lightgray;        
+        // box-shadow: 0 0 15px lightblue;
+        // border-radius: 0.4em;
     }
 
     .point{
@@ -148,7 +164,7 @@
     pointer-events: none;
     
     .line{
-        background-color: #555;
+        background-color: #666;
     }
 
     .line:nth-child(even){ 

@@ -40,11 +40,11 @@
 
     <div class="menu">    
 
-        <div class="point">Home</div>
+        <a class="point" href="/">Home</a>
 
-        <div class="point">Home</div>
+        <a class="point" href="/pages/slider">Slider</a>
 
-        <div class="point">Home</div>
+        <a class="point"  href="/pages/preloader">Loader</a>
 
         <div class="point">Home</div>
 
@@ -55,6 +55,24 @@
     </div>
 
     <div class="background"></div>
+
+    
+
+    <script>
+
+        document.querySelector('.menu').onclick = (e) => {        
+
+            e.preventDefault();        
+
+            setTimeout(() => {
+
+                document.location = e.target.href
+
+            }, 300)
+
+        }
+
+    </script>
     
     <div class="mirror">
     
@@ -62,7 +80,7 @@
     
         <div class="front">
     
-            <h3>Фронтэнд</h3>
+            <h3>Frontend</h3>
     
     
     

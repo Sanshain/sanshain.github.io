@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="">
+
+	<head>
+
+		<meta charset="utf-8">
+
+		
+		<link rel="stylesheet" href="wait.css" />
+		<link rel="stylesheet" href="/style/menu.css">
+
+		<style>
+			#container{
+				background-color: #4eb5fa;
+				/* min-height: 100%;
+				position: fixed;
+				width: 100%; */
+			}
+		</style>
+
+		<script>
+
+			var dom = document;
+			var vom = {};
+			dom.get_s = document.querySelectorAll;
+			dom.obj = dom.getElementById;
+
+			function Elem(type_name, txt, css_cls){		
+				var elem = document.createElement(type_name);	
+				elem.innerText = txt;	//value
+				
+				if (css_cls) {
+					elem.className = css_cls;
+				}
+				
+				return elem;	
+			}
+
+
+			vom.add = function(container, elem, cls)
+			{
+				if (typeof container == 'string') 	{	
+					container = document.querySelector(container);
+					}
+				if (typeof elem == 'string'){
+					
+					elem = document.createElement(elem);
+					if (cls) elem.className = cls;
+					
+				}
+				
+				container.appendChild(elem);
+				
+				return elem;		
+			};
+
+			HTMLElement.prototype.vs = function (dict) {
+
+				for (var key in dict){
+					this.setAttribute(key, dict[key]);
+				}
+
+				return this;
+			};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			var animation = {
+				elem_quantity : 5, //кол-во элементов
+				
+				init : 3,          // плавное появление, s
+				limit : 7,         // s, время для выключения
+				time_wait : 500,   // мс между переключениями
+				
+				animates : [],     // интервалы для их отмены
+				
+				point_states : {}, // анимируемые элементы и их состояние
+				
+				_timeouts : [],
+				onstart : null,
+				ontimer : null,
+				onfinished : function(el){
+				
+				   var elem = vom.add(
+					    el, 'div', 'limit_loader'
+						 
+					);
+					
+					elem.textContent = 'Нет соединения. Перезагрузите страницу';
+					
+					setTimeout(function(){
+					    
+						 elem.style.opacity = '1';
+					},25);					
+					
+				}, // происходит только при истечении limit
+				
+				remove_onclean : true,//режим чистки по дефолту
+				
+				clean : function(hide){
+				    
+					hide= hide == void 0 ? 
+					    ! this.remove_onclean 
+						 : hide;
+					
+				   var onclean = 
+					   this.finished && this.onfinished 
+						? (function(_elem)
+						{
+						    
+							this.onfinished(_elem.parentElement)
+							
+						}).bind(this)
+						: (function(_elem) {}) ;
+
+					if (hide)
+					{
+											
+						for (var id in this.point_states){
+						   
+							var elem = dom.obj(id);
+							
+							onclean(elem);
+							
+							elem.style.display = 'none';
+							this.point_states[id]=false;
+							
+							var active = elem.querySelector(
+							    '.circle.active'
+						   );
+							
+							active.className = 'circle';
+							
+							
+						}
+			
+					}
+					else{				   
+					
+						for (var id in this.point_states){
+							
+							var elem = dom.obj(id);
+							
+							onclean(elem);
+							
+							elem.parentElement.removeChild(
+							    elem
+							);									
+						}		
+
+                  this.point_states = {};						
+						
+					}
+				
+
+					 
+				},
+				
+				stop : function(just_hide){
+				
+				   if (this.finished == false){
+					   
+						// если задан finished=false, значит ожидается stop_timer. Выключаем:
+					   clearTimeout(this.stop_timer);
+					}
+					else if (this.finished){
+					
+					   // если задан finished=true, значит 
+						// сработал stop_timer
+
+                  // обработка произойдет в clean
+
+					}
+				
+				   while (this._timeouts.length){
+					
+					    clearTimeout(this._timeouts.pop());
+					}
+               
+				
+				   var elems = Object.keys(this.point_states);
+				
+				   for(var i=0;i<this.animates.length;i++){
+					
+                  elems[i] = dom.obj(elems[i]);
+						elems[i].style.opacity = '0.05';
+					}
+               
+					
+					setTimeout((function(){
+					
+						for(var i=0;i<this.animates.length;i++){
+						
+							clearInterval(this.animates[i]);
+						}
+						this.animates = [];					
+						
+						// тут можно так же удалять созданные элементы					
+						this.clean(just_hide);
+						  
+					}).bind(this), this.init * 1000);
+					
+					
+					
+					
+					
+				},
+				
+				
+				start : function(elem){
+				
+					if (!elem.id)
+					   throw new Error(
+						     'you need have id for animate elem'
+						);
+				
+				   if (this.onstart) this.onstart(elem);
+					if (this.ontimer && this.timer) {
+					 
+					   this._timeouts(
+						
+							setTimeout(function(){
+							
+								 this.ontimer(elem);
+								 
+							}, this.timer)
+						);
+						
+					}
+				
+				   var anim = null;
+				
+				   if (anim = elem.querySelector('.animate_container')){
+					    anim.style.display = 'block';
+					}
+					else{
+					
+						anim = 
+							vom.add(elem,'div','animate_container'
+						).vs({
+						    id : '__a_' + elem.id,
+							 style : 'transition:'+this.init+'s;'
+						});				
+						var i=0; while(i++ <this.elem_quantity){
+							vom.add(anim, 'div', 'circle');
+						}						
+					}
+									
+				
+				   setTimeout(function(){
+					
+					   anim.style.opacity = '1';
+					}, 25);
+				  	
+					
+               if (this.limit) {
+					
+					   this.finished = false;
+						this.stop_timer= setTimeout((function(){
+							
+							this.finished = true;
+							this.stop();      //true/false
+						})
+						.bind(this), this.limit*1000);					
+					}
+
+					
+					
+					return this.run(anim);
+							  
+				},
+				run : function (elem){
+				
+				   this.point_states[elem.id] = true;
+				
+					_time = animation.time_wait || 500;
+				
+					var elems=(elem || dom).querySelectorAll(
+						'.animate_container .circle'
+					);
+				
+					var key = 0;
+							
+					var _animate = setInterval(function(){					
+
+						var len = elems.length - 1;
+						
+						if (len < 0)
+							throw new Error ('missing elements inside container for animate');
+						
+						var pre = key > 0 ? key - 1  : len;
+						elems[key].className = 'circle active';
+						elems[pre].className = 'circle';
+
+					  if (key<len) {key+=1} else key=0;
+					  
+					}, _time); 
+
+					this.animates.push(_animate);
+					
+					return _animate;
+					
+				}				
+				
+			}
+			
+			function animate_start(elem){
+			
+				var anim = 
+					vom.add(elem,'div','animate_container'
+				);				
+				var i=0; while(i++ <animation.elem_quantity){
+					vom.add(anim, 'div', 'circle');
+
+				}
+							  
+				return await_animate(anim);
+						  
+			}
+         
+			
+			function await_animate(elem){
+			
+			   _time = animation.time_wait || 500;
+			
+				var elems=(elem || dom).querySelectorAll(
+					'.animate_container .circle'
+				);
+			
+				var key = 0;
+						
+				var _animate = setInterval(function(){					
+
+					var len = elems.length - 1;
+					
+					if (len < 0) 
+						throw new Error ('missing elements inside container for animate');
+					
+					var pre = key > 0 ? key - 1  : len;
+					elems[key].className = 'circle active';
+					elems[pre].className = 'circle';
+
+				  if (key<len) {key+=1} else key=0;
+				  
+				}, _time); 
+
+				animate.animates.push(_animate);
+				
+				return _animate;
+				
+			}
+
+
+		</script>
+
+	</head>
+
+	<body>
+		
+		<div id="container" onclick='animation.start(this)'></div>
+		
+		<!--=include "../../components/menu.html" -->
+
+		<script>
+			animation.start(container)
+		</script>
+	</body>
+
+</html>
