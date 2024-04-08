@@ -42,10 +42,11 @@
 
     position: absolute;
     width: @offset;
-    left: 0;
+    // left: 0;
     
     top: 0;
     left: -@offset;
+    // right: -@offset;
     // opacity: 0;
     transition: .5s;
     
@@ -122,6 +123,7 @@
 .hamburger:focus+.menu{
     // border: 1px solid gray;
     left: 0;
+    // right: 0;
     // opacity: .8;
     z-index: 5;
     box-shadow: 0 0 15px gray;

@@ -27,7 +27,6 @@
 .menu {
   position: absolute;
   width: 30%;
-  left: 0;
   top: 0;
   left: -30%;
   transition: 0.5s;
