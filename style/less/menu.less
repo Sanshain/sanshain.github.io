@@ -1,0 +1,140 @@
+/* less */
+
+// HAMBURGER:
+
+.hamburger{
+    cursor: pointer;
+    padding: .5em;
+    height: 2em;
+    width: 2em;
+    position: relative;
+    // top: 2em;
+    z-index: 6;
+}
+
+.line{
+    margin-top: 1em;
+    height: 2px;
+    // width: calc(100% - 1em);
+    width: 2em;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    transition: 0 .5s;    
+}
+
+.line:nth-child(odd){ 
+    top: .5em; 
+    transition: .5s;
+}
+// .line:nth-child(2){ top: .5em; }
+
+.line:nth-child(2){ top: 1em; }
+
+
+
+// MENU:
+
+
+.menu{
+    position: absolute;
+    width: 50%;
+    left: 0;
+    
+    top: 0;
+    left: -50%;
+    // opacity: 0;
+    transition: .5s;
+    
+    z-index: -5;
+    
+    // height: calc(100% - 3.5em);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .close{
+        color: transparent;
+        border: 1px solid transparent;
+        height: 2em;
+        width: 2em;
+        position: absolute;
+        // top: -2.5em;
+        top: 1em;
+        left: .9em;
+        transition: .5s .5s;              
+    }
+    
+    .point{
+        font-size: large;        
+
+        padding: 1em .5em;
+        cursor: pointer;
+        transition: .5s;
+        text-align: center;
+        background-color: cornflowerblue;
+
+        flex: 1;
+        align-content: center; 
+        border-bottom: 1px solid lightblue;       
+        background-color: #6495eddd;   
+        background-color: #b2c6ebdd;   
+        // background-color: white;   
+        // background-color: aquamarine;   
+        
+        opacity: 0;   
+
+        &:hover{
+            
+            background-color: #b2c6ebee;  
+            // background-color: #6495ed;            
+            // background-color: #add8e688;            
+            // background-color: lightblue;            
+            text-decoration: underline;
+            opacity: .85 !important;
+            box-shadow: 0 0 15px #333 inset;
+        }
+    }
+}
+
+
+
+
+// interaction:
+
+.hamburger:focus+.menu{
+    // border: 1px solid gray;
+    left: 0;
+    // opacity: .8;
+    z-index: 5;
+    box-shadow: 0 0 15px gray;
+
+    .close{
+        border: 1px solid lightgray;        
+    }
+
+    .point{
+        opacity: 1;
+    }
+}
+
+
+.hamburger:focus{
+    pointer-events: none;
+    
+    .line{
+        background-color: #555;
+    }
+
+    .line:nth-child(even){ 
+        opacity: 0; 
+        transition: 0;
+    }
+    .line:nth-child(1){ 
+        transform: rotate(45deg);
+    }
+    .line:nth-child(3){ 
+        transform: rotate(-45deg);
+    }    
+}

@@ -2,12 +2,19 @@
   "name": "sanshain.github.io",
   "version": "1.0.0",
   "description": "[sample](http://sanshain.github.io)",
-  "main": "script.js",
-  "type": "module",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp less",
+    "build": "gulp build",
+    "start": "gulp watch"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^5.0.0",
+    "gulp-include": "^2.4.1",
+    "gulp-less": "^5.0.0"
+  }
 }
