@@ -38,8 +38,10 @@ body{
 	top:0;
 	bottom:0;
 	
-	width:100%;	
+	width:100%;		
 	background-color:beige;
+	background-color:aliceblue;
+		
 	text-align:center;
 	line-height:100vh;	         /* just for ie9+ */
 	
@@ -90,6 +92,7 @@ button.expand{
 	display:inline-block;
 	position: absolute;
 	background-color: white;
+	background-color: burlywood;
 }
 
 
@@ -127,7 +130,7 @@ button.expand{
 .expand > span.t, .expand > span.b{
 	width: 1.5em;                    /* @button_size*2/3 */
 	height: 0.5em;
-	background-color: white;
+	background-color: burlywood;
 }
 .expand > span.t{
 	top: 0.2em;                      /* @expand_paddings */
@@ -185,20 +188,6 @@ button.expand{
 }
 
 
-@media screen and (max-width: 800px){
-	
-	.image_container{
-		
-			
-	}	
-	
-	.slide{
-
-		max-height: 95vh;
-		max-width: 95vw; 		
-	}
-}
-
 .slides{
     position: absolute;
     bottom: 0;
@@ -248,7 +237,7 @@ button.expand{
 	background-color: lightblue;	
 	
 	transition: 0.5s;
-	opacity: 0.4;
+	opacity: 0.33;
    
 	box-shadow: 0 0 15px 5px lightblue;
 }
@@ -286,3 +275,30 @@ button.expand{
 	top:-1em;
 }
 
+
+
+
+@media screen and (max-width: 800px) {
+
+	.image_container {}
+
+	.slide {
+
+		max-height: 95vh;
+		max-width: 95vw;
+	}
+
+	button.expand{
+		bottom: 2em;
+		left: 1em;
+	}
+	
+	button.close { right: .6em; }
+	.back { left: 1em; }
+	.btn__next { right: 1em; }
+
+	.slide_container button{
+		opacity: 0.1;
+	}
+
+}

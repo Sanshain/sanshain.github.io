@@ -8,10 +8,45 @@
     <style>
         body {
             overflow-x: hidden;
-            background: url(https://sportishka.com/uploads/posts/2023-12/1702151463_sportishka-com-p-che-gori-krasivo-1.jpg), url(./images/_min.mountain.jpg);
+            /* background: url(https://sportishka.com/uploads/posts/2023-12/1702151463_sportishka-com-p-che-gori-krasivo-1.jpg), url(./images/_min.mountain.jpg); */
+            /* background: url(/images/mountain-2.jpg), url(./images/_min.mountain.jpg); */
+            background: url(/images/mountain-3.jpg), url(./images/_min.mountain.jpg);
+            z-index: -1;
+        }
+
+        .gradient {
+            position: fixed;
+
+            /* display: none; */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            background-color: white;
+            opacity: .55;
+
+            animation: appearing 1.5s linear forwards;
+        }
+
+        @keyframes appearing {
+            100%{
+                opacity: 0;
+                visibility: hidden;
+            }
+            /* 40% {
+                left: 50%;
+                bottom: 75%;
+                animation-timing-function: ease-in;
+            }
+
+            80% {
+                left: 90%;
+                bottom: -10em;
+            } */
         }
     </style>
-    
+
     <link rel="stylesheet" href="./style/mirror.css">
     <link rel="stylesheet" href="./style/menu.css">
 
@@ -25,6 +60,8 @@
 </head>
 
 <body>
+
+    <div class="gradient"></div>
 
     <div class="hamburger" tabindex="0">
 
@@ -73,45 +110,45 @@
         }
 
     </script>
-    
+
     <div class="mirror">
+
     
-    
-    
+
         <div class="front">
-    
+
             <h3>Frontend</h3>
+
     
-    
-    
+
             <div>typescript</div>
-    
+
             <div>svelte</div>
-    
+
             <div>rollup</div>
-    
+
             <div>esbuild</div>
-    
+
         </div>
-    
+
         <div class="back reverse">
-    
+
             <h3>Backend</h3>
+
     
-    
-    
+
             <div>django</div>
-    
+
             <div>python</div>
-    
+
             <div>tortoise-orm</div>
-    
+
             <div>django-channels</div>
-    
+
         </div>
+
     
-    
-    
+
     </div>
 
 </body>

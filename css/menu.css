@@ -36,6 +36,9 @@
   flex-direction: column;
   justify-content: space-around;
 }
+.menu a {
+  text-decoration: none;
+}
 .menu .close {
   color: transparent;
   border: 1px solid transparent;
@@ -66,7 +69,6 @@
 }
 .menu .point:hover {
   background-color: #b2c6ebee;
-  text-decoration: underline;
   opacity: 0.85 !important;
   box-shadow: 0 0 15px #333 inset;
 }
@@ -117,4 +119,13 @@
 }
 .hamburger:focus .line:nth-child(3) {
   transform: rotate(-45deg);
+}
+@media screen and (max-width: 480px) {
+  .menu {
+    width: 100%;
+    left: -100%;
+  }
+  .menu a {
+    text-decoration: none;
+  }
 }

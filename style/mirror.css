@@ -14,7 +14,7 @@
     cursor: pointer;
     transition: .6s linear;
     text-align: center;
-    font-size: xx-large;
+    font-size: xx-large;    
 }
 
 .mirror h3 {
@@ -26,11 +26,14 @@
 }
 
 .front {
-    background-color: #0099ff;
+    background-color: #0099ff;  
+    background-color: #4eb5fa;
+    box-shadow: gray 0px 0px 15px;
 }
 
 .back {
     background-color: #339999;
+    box-shadow: gray 0px 0px 15px;
 }
 
 .reverse {
@@ -41,6 +44,8 @@
 .back>div {
     background-color: lightgreen;
     height: 50px;
-    width: 500px;
+    max-width: 500px;
     margin: auto;
 }
+
+
