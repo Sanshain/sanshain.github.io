@@ -10,3 +10,5 @@ Runs gulp watching with html and less listeners:
 ```sh
 npm run start
 ```
+
+Then edit source files inside `source` and `style` directories
