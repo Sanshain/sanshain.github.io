@@ -63,6 +63,7 @@
   background-color: #6495eddd;
   background-color: #b2c6ebdd;
   opacity: 0;
+  color: #333;
 }
 .menu .point:visited {
   color: #333;
@@ -119,6 +120,10 @@
 }
 .hamburger:focus .line:nth-child(3) {
   transform: rotate(-45deg);
+}
+.point img {
+  opacity: 0.5;
+  vertical-align: middle;
 }
 @media screen and (max-width: 480px) {
   .menu {
