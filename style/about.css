@@ -1,0 +1,115 @@
+.about_button,
+.close_about {
+    position: fixed;
+    bottom: 1.5em;
+    left: calc(50% - 1em);
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    text-align: center;
+    vertical-align: middle;
+    transition: 1s;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.about_button {
+    /* background-color: hsla(180, 100%, 97%, 0.569); */
+
+    border-radius: 1em;
+    transform: rotate(-90deg);
+
+    color: rgba(222, 184, 135, 0.837);
+    box-shadow: 0 0 25px gray;
+    opacity: .6;
+}
+
+.about_button:hover {
+    opacity: .8;
+    box-shadow: 0 0 15px white;
+}
+
+.about_button:focus {
+    color: transparent;
+}
+
+.close_about {
+    z-index: -1;
+    opacity: 0;
+    color: gray;
+}
+
+
+
+
+.about {
+    position: relative;
+    /* top: 100%; */
+    margin-top: 60% !important;
+    will-change: margin-top;
+    /* background-color: #f0f8ff91; */
+    /* text-shadow: #FC0 1px 0 10px;; */
+    /* background-color: #f0f8ffaa; */
+    padding: 1em;
+    color: #676d6d;
+    color: #fff;
+    line-height: 1.3em;
+    box-shadow: 0 0 15px gray;
+    margin: 5em 15%;
+    opacity: .9;
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+    /* transition: 1s; */
+    transition: .5s 0.05s;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.about_button:focus~.about {
+    margin-top: 5em !important;
+}
+
+
+.about_button:focus~.close_about {
+    z-index: 1;
+    opacity: 1;
+}
+
+
+.about_button:focus~.background {
+    opacity: 1;
+    background-color: #333333b5;
+    /* backdrop-filter: blur(3px);   - too complicated animation -> freezes     */
+}
+
+.about li {
+    margin: 1.5em 0;
+}
+
+.about a {
+    /* color: gray; */
+    color: lightblue;
+}
+
+.about:hover {
+    opacity: .9;
+}
+
+/* selected menu point */
+
+.pointed {
+    color: lightblue !important;
+    color: aliceblue !important;
+    /* color: gray !important; */
+}
+
+@media screen and (max-width: 480px) {
+    .about {
+        margin: 2em;
+        transition: .7s 0.05s;
+    }
+
+    .about_button:focus~.about {
+        margin-top: -75vh !important;
+    }
+}
