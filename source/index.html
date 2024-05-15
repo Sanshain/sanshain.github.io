@@ -131,7 +131,9 @@
         
         .about_button:focus~.background{                        
             opacity: 1;
-        }      
+            background-color: #333333b5;     
+            /* backdrop-filter: blur(3px);   - too complicated animation -> freezes     */
+        }
 
         .about li{
             margin: 1.5em 0;
@@ -145,6 +147,8 @@
         .about:hover{
             opacity: .9;
         }
+
+        /* selected menu point */
 
         .pointed{
             color: lightblue !important;
@@ -198,7 +202,8 @@
     
 
     <div class="about">
-        Hi! Welcome to my developer's page! I am Sanshain, full stack developer. Sanshain is my nickname. And my real name is Alexander. I am from Russia. And short facts about me:
+        Hi! Welcome to my developer's page! I am Sanshain, full stack developer. But <i>Sanshain</i> is my nickname. And my real name is Alexander. 
+        I am from Russia. And short facts about me:
         <ul>
             <li>I like mountains (as you might guess from the picture)</li>
             <li>I really love science fiction (especcially of Stanislav Lemm and Philip Dick)</li>

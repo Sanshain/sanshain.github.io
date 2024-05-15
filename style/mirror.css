@@ -10,7 +10,8 @@
 }
 
 .mirror>div{
-    transform: translate(0, 0);
+    /* transform: translate(0, 0); */
+    transform: translateZ(0);
 }
 
 .mirror>div {
@@ -28,7 +29,12 @@
     margin-bottom: 0.2em;
 
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;       
-    color: #111;
+
+    color: #111;    
+}
+
+.mirror .back h3{        
+    color: antiquewhite;
 }
 
 .front {
@@ -52,14 +58,40 @@
     height: 50px;
     max-width: 500px;
     margin: auto;    
+
+    font-size: x-large;
+    vertical-align: middle;
+    line-height: 2em;
+    font-family: monospace;
+
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #339999ff;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+    will-change: transform;
+    user-select: none;
 }
 
-.mirror img{
+.mirror>img{
     margin: 1em auto;
     display: block;
     height: 5em;
 }
 
+.mirror .front img, 
+.mirror .back img{
+    display: inline-block;
+    height: .6em;
+    width: .6em;
+    margin: 0;
+    vertical-align: middle;
+    opacity: .2;
+}
+
+.mirror .back img {
+    height: .7em;
+    width: .7em;
+}
 
 .mirror .logo {
     /* position: absolute; */
@@ -75,11 +107,17 @@
     border-radius: 1.5em;
     border: 2px solid cyan;
     box-shadow: 0 0 15px gold;
+    margin-bottom: 5px;
 }
 
 
 @media screen and (max-width: 480px) {
     .mirror img {
         margin: 3em auto;
+    }
+
+    .mirror h3 {
+        color: rgb(126, 87, 37);
+        /* font-size: 2.1rem; */
     }
 }
