@@ -1,0 +1,33 @@
+.header{
+    color: red;
+    color: blue;
+}
+
+
+.repo_list{
+    padding: 2em 1em;
+}
+
+.repo_block{
+    list-style-type: none;
+    box-shadow: 0 0 5px white;
+    color: white;
+    width: calc(100% - 4em);
+    padding: .5em 1em;
+    margin: .8em .2em;
+    cursor: pointer;
+    border-radius: .75em;
+    border: 1px solid transparent;
+    transition: .3s;
+    outline: none;
+
+    &:focus {
+        border: 1px solid lightblue;
+        box-shadow: 0 0 15px gray;
+    }
+}
+
+.repo_block:hover{
+    box-shadow: 0 0 15px white;
+    background-color: rgba(0, 0, 0, 0.11)
+}

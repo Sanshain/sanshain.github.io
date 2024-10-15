@@ -1,0 +1,59 @@
+*{
+    position: relative;
+}
+
+body {
+    overflow-x: hidden;
+    /* background: url(https://sportishka.com/uploads/posts/2023-12/1702151463_sportishka-com-p-che-gori-krasivo-1.jpg), url(./images/_min.mountain.jpg); */
+    /* background: url(/images/mountain-2.jpg), url(./images/_min.mountain.jpg); */
+    background: url(/images/mountain-3.jpg), url(/images/mini/min-mountain-3.jpg);
+    z-index: -1;
+    
+    /* CONTENT: */
+    
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    /* chrome based */
+    width: 0px;
+    /* ширина scrollbar'a */
+    background: transparent;
+    /* опционально */
+}
+
+.gradient {
+    position: fixed;
+
+    /* display: none; */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-color: aliceblue;
+    opacity: .6;
+
+    animation: appearing 1s linear forwards;
+}
+
+@keyframes appearing {
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* 40% {
+        left: 50%;
+        bottom: 75%;
+        animation-timing-function: ease-in;
+    }
+
+    80% {
+        left: 90%;
+        bottom: -10em;
+    } */
+}
+
+
+

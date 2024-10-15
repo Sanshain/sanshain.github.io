@@ -1,5 +1,6 @@
 .mirror {
     opacity: .75;
+    transition: .5s;
 
     /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;    ; */
     /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */

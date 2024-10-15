@@ -5,62 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanshain tools surroundings</title>
-    <style>
-        body {
-            overflow-x: hidden;
-            /* background: url(https://sportishka.com/uploads/posts/2023-12/1702151463_sportishka-com-p-che-gori-krasivo-1.jpg), url(./images/_min.mountain.jpg); */
-            /* background: url(/images/mountain-2.jpg), url(./images/_min.mountain.jpg); */
-            background: url(/images/mountain-3.jpg), url(./images/_min.mountain.jpg);
-            z-index: -1;
-        }
-
-        .gradient {
-            position: fixed;
-
-            /* display: none; */
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-
-            background-color: aliceblue;
-            opacity: .6;
-
-            animation: appearing 1s linear forwards;
-        }
-
-        @keyframes appearing {
-            100%{
-                opacity: 0;
-                visibility: hidden;
-            }
-            /* 40% {
-                left: 50%;
-                bottom: 75%;
-                animation-timing-function: ease-in;
-            }
-
-            80% {
-                left: 90%;
-                bottom: -10em;
-            } */
-        }
-
-
-        /* CONTENT: */
-
-        body{
-            overflow: hidden;
-        }
-
-    </style>
     
+    <link rel="stylesheet" href="/style/root.css">
     <link rel="stylesheet" href="./style/about.css">
     <link rel="stylesheet" href="./style/mirror.css">
     <link rel="stylesheet" href="./style/menu.css">    
+    
+    <link rel="stylesheet" href="/web/components/search.html/dist/styles.css">
 
+    <!-- VANILLA APP: -->
     <script defer src="./app.js"></script>
+    <!--  PREACT APP: -->
+    <script defer src="/web/components/search.html/dist/main.js"></script>
+
     <script>
+        window.process = {
+            env: {
+                NODE_ENV: 'production'
+            }
+        };
         window.addEventListener('load', () => {
             document.querySelector('.point').classList.add('pointed');
         })
@@ -103,6 +66,7 @@
 
     <div class="close_about">&#10006;</div>
     
+    <!--=include "./components/search.html/index.html" -->
 
 </body>
 

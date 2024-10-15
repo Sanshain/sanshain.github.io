@@ -21,8 +21,6 @@
 <script>
     document.querySelector('.menu').onclick = (e) => {        
         e.preventDefault();        
-        setTimeout(() => {
-            document.location = e.target.href
-        }, 350)
+        setTimeout(() => document.location = e.target.href, 350)
     }
 </script>
