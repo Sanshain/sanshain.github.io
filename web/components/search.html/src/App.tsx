@@ -140,7 +140,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       }, {once: true})
    }
 
-   function expandBranchBtnFocus(e: KeyboardEvent, url: string) {      
+   function expandBranchBtnFocus(e: KeyboardEvent, repo: GithubRepoInfo) {
       if (e['code'] == 'NumpadAdd') {
          const target = (e.currentTarget as HTMLElement).querySelector('.branches_btn') as HTMLElement;
          target.focus()
@@ -148,8 +148,13 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
          const ev = {
             currentTarget: (e.currentTarget as HTMLElement).querySelector('.branches_btn')
          }
-         fetchBranches(ev as { currentTarget: EventTarget}, url)
+         fetchBranches(ev as { currentTarget: EventTarget}, repo.branches_url)
       }
+      else if (~e['code'].indexOf('Enter')) {
+         window.open(repo.html_url, '_blank');   // <- also TODO type it via types-spring         
+      }
+
+      console.warn(e['code'])
    }
 
    function expandBranchList(e: Event, repo: GithubRepoInfo) {
@@ -157,7 +162,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       target.style['transform'] = 'rotate(270deg)';
 
       fetch(repo.branches_url).then(r => r.json()).then(r => {
-         
+
       })
    }
 
@@ -168,8 +173,9 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       <div className={searchContainerStyle}>
          <ul class={style.repo_list}>
             {repos.map(repo => {
-               return <li class={style.repo_block} tabIndex={0} onKeyDown={(e) => expandBranchBtnFocus(e, repo.branches_url)} >
-                  <h3 className={css`margin: .5em 0;display:inline-block;`}>{repo.name}</h3>
+               return <li class={style.repo_block} onKeyDown={(e) => expandBranchBtnFocus(e, repo)} >
+                  {/*  tabIndex={0} */}
+                  <a href={repo.html_url}><h3 className={css`margin: .5em 0;display:inline-block;`}>{repo.name}</h3></a>
                   <p className={css`margin: .5em 0;`}>{repo.description || ''}</p>
                   <div className={tags}>
                      <div className={`${hashtag} lang`}>{repo.language}</div>
