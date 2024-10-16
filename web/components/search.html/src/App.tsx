@@ -169,11 +169,11 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
    const [branches, setBranches] = useState<{ repo: number, branches: Array<{}> } | null>(null);
 
    return (<>
-      <input type="search" placeholder="Start typing repository name you want..." onInput={onInput} onFocus={getRepos} onKeyUp={onEscape} />
+      <input type="search" placeholder="Start typing repository name you want..." tabIndex={1} onInput={onInput} onFocus={getRepos} onKeyUp={onEscape} />
       <div className={searchContainerStyle}>
          <ul class={style.repo_list}>
             {repos.map(repo => {
-               return <li class={style.repo_block} onKeyDown={(e) => expandBranchBtnFocus(e, repo)} >
+               return <li class={style.repo_block} tabIndex={1} onKeyDown={(e) => expandBranchBtnFocus(e, repo)} >
                   {/*  tabIndex={0} */}
                   <a href={repo.html_url}><h3 className={css`margin: .5em 0;display:inline-block;`}>{repo.name}</h3></a>
                   <p className={css`margin: .5em 0;`}>{repo.description || ''}</p>

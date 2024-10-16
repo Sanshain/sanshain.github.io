@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanshain tools surroundings</title>
-    
+
     <link rel="stylesheet" href="/style/root.css">
     <link rel="stylesheet" href="./style/about.css">
     <link rel="stylesheet" href="./style/mirror.css">
-    <link rel="stylesheet" href="./style/menu.css">    
-    
+    <link rel="stylesheet" href="./style/menu.css">
+
     <link rel="stylesheet" href="/web/components/search.html/dist/styles.css">
 
     <!-- VANILLA APP: -->
@@ -44,15 +44,21 @@
 
     <div class="gradient"></div>
 
-    <div class="about_button" tabindex="0">&#10148;</div>
+    <div class="about_button" tabindex="0" 
+        onclick="document.querySelector('#search').style.opacity = '0.05'"
+        onblur="document.querySelector('#search').style.opacity = null">
+
+        &#10148;
+    </div>
 
     <!--=include "./components/menu.html" -->
-    
+
     <!--=include "./components/mirror.html" -->
-    
+
 
     <div class="about">
-        Hi! Welcome to my developer's page! I am Sanshain, full stack developer. But <i>Sanshain</i> is my nickname. And my real name is Alexander. 
+        Hi! Welcome to my developer's page! I am Sanshain, full stack developer. But <i>Sanshain</i> is my nickname. And
+        my real name is Alexander.
         I am from Russia. And short facts about me:
         <ul>
             <li>I like mountains (as you might guess from the picture)</li>
@@ -62,10 +68,10 @@
 
         You can also learn
         about my pro skills from my <a target="_blank" href="http://github.com/Sanshain">github profile</a>
-    </div>    
+    </div>
 
     <div class="close_about">&#10006;</div>
-    
+
     <!--=include "./components/search.html/index.html" -->
 
 </body>
