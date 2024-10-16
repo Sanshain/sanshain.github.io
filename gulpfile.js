@@ -22,7 +22,7 @@ gulp.task('less', function () {
 
 
 gulp.task('build', function () {
-    return gulp.src('web/**/index.html')
+    return gulp.src('web/index.html')
         .pipe(include())
         .pipe(minhtml({ collapseWhitespace: true })).on(
             'error', console.log
