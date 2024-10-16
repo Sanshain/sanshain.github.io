@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "gulp less",
-    "build": "gulp build",
-    "start": "gulp watch"
+    "join": "gulp build",
+    "watch": "gulp watch"
   },
   "keywords": [],
   "author": "",

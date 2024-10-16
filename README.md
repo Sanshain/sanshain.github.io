@@ -8,7 +8,7 @@
 Runs gulp watching with html and less listeners:
 
 ```sh
-npm run start
+npm run watch
 ```
 
 Then edit source files inside `source` and `style` directories
