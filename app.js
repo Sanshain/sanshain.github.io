@@ -1,9 +1,21 @@
+//@ts-check
+
+//@ts-expect-error
 dom = document;
+/**
+ * @type {(s: string) => HTMLElement}
+ */
+//@ts-ignore
 dom.get = dom.querySelector;
 
 let direct = true;
 
-function turn(event) {
+function turn(event) {        
+
+    if (event.target.tagName == 'IMG') {
+        return;
+        // document.location.href = 'https://github.com/Sanshain'
+    }
 
     var last = dom.get('.mirror>div:not(.reverse)');
     var next = dom.get('.reverse');
@@ -26,4 +38,5 @@ function turn(event) {
 }
 
 const container = document.querySelector('.mirror');
+//@ts-expect-error
 container.onclick = turn;

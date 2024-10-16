@@ -55,18 +55,10 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
    function onEscape(e: KeyboardEvent) {
       console.log(e.key)
       if (e.code == 'Escape') {
-
-         updateRepos(v => [])
          const target = e.currentTarget as HTMLInputElement;
-         target.value = '';
-         target.blur()
-         onBlur()
+         closeSearch(target);
       }
    }
-
-   // function onBlur() {
-   //    updateRepos(v => [])
-   // }
 
    const hashtag = css`
       display: inline-block;
@@ -121,9 +113,12 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       }
    `;
 
-   const branches_count = css`
-      
-   `;
+   function closeSearch(input: HTMLInputElement) {
+      updateRepos(v => []);      
+      input.value = '';
+      input.blur();
+      onBlur();
+   }
 
    function fetchBranches(e: { currentTarget: EventTarget }, url: string) {
       const target = e.currentTarget as HTMLInputElement;
@@ -205,9 +200,33 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
    
    const [branches, setBranches] = useState<{ repo: number, branches: Array<{}> } | null>(null);
 
+   const close_search = css`
+      position: fixed;
+      top: 1.5em;
+      right: 2em;
+      
+      /* border: 1px solid lightblue;
+      width: 2em;
+      height: 2em;
+      line-height: 2em;
+      text-align: center;
+      border-radius: 1em;
+      outline: none;
+      color: aliceblue;
+      cursor: pointer;
+      transition: 1s;      
+      
+      &:hover{
+         box-shadow: 0 0 15px gray;
+      } */
+   `
+
+   // const close_search = accordeon;
+
    return (<>
       <input type="search" placeholder="Start typing repository name you want..." tabIndex={1} onInput={onInput} onFocus={getRepos} onKeyUp={onEscape} />
       <div className={searchContainerStyle}>
+         {repos.length ? <div className={`${accordeon} ${close_search}`} onClick={() => closeSearch(document.querySelector('#search>input') as HTMLInputElement)}>✕</div> : ''}
          <ul class={style.repo_list}>
             {repos.map(repo => {
                return <li class={style.repo_block} tabIndex={1} onKeyDown={(e) => expandBranchBtnFocus(e, repo)} >

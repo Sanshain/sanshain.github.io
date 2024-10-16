@@ -73,7 +73,7 @@
     user-select: none;
 }
 
-.mirror>img{
+.mirror>a>img{
     margin: 1em auto;
     display: block;
     height: 5em;
