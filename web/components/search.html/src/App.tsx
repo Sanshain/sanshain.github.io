@@ -24,6 +24,8 @@ const searchContainerStyle = css`
    overflow: auto;
 `;
 
+let prevExpandedHeight: number | null = null;
+
 function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JSX.Element {
 
    const [repos, updateRepos] = useState<GithubRepoInfo[]>(repos$)
@@ -157,27 +159,55 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       }
 
       console.warn(e['code'])
-   }
+   }   
 
    function expandBranchList(e: { currentTarget: Element }, repo: GithubRepoInfo) {
+
+
+      if (expandedRepo == repo.id) {
+         
+      }
+
       const target = (e.currentTarget as HTMLElement)
       target.style['transform'] = 'rotate(270deg)';
 
-      if (!repo.branches) fetch(repo.branches_url.replace(/\{[\w\/]+\}/, '')).then(r => r.json()).then((r: Array<{name: string}>) => {
-         console.log(r);
+      if (!repo.branches) fetch(repo.branches_url.replace(/\{[\w\/]+\}/, '')).then(r => r.json()).then((r: Array<{ name: string }>) => {
+         
          repo.branches = r.map(v => v.name);
          
-         const container = target.parentElement as HTMLElement;
-         // container.style.height = container.offsetHeight + 'px';
-
-         setTimeout(() => {
-            container.style.height = container.offsetHeight + (repo.branches?.length || 0) * 28 - 10 + 'px';
-            setTimeout(() => setExpand(repo.id), 400);
-         })         
-         
+         animateBranchesAppearing();
       })
       else{
-         setExpand(repo.id)
+         // setExpand(repo.id)
+         animateBranchesAppearing();
+      }
+
+      function animateBranchesAppearing() {
+         
+         const handlingContainer = target.parentElement as HTMLElement;
+         const expandedContainer = document.getElementById(expandedRepo.toString());
+                                 
+         const _prevExpandedHeight = prevExpandedHeight;
+         handlingContainer.style.height = (prevExpandedHeight = handlingContainer.clientHeight - 16) + 'px';
+         setExpand(NaN)
+      
+         setTimeout(() => {            
+            if (_prevExpandedHeight && expandedContainer) {
+               // console.log(_prevExpandedHeight, prevExpandedHeight);               
+               expandedContainer.style.height = _prevExpandedHeight + 'px';
+            }
+         });
+
+         setTimeout(() => {
+            handlingContainer.style.height = handlingContainer.clientHeight + (repo.branches?.length || 0) * 26 - 10 + 'px';            
+            setTimeout(() => {
+               setExpand(repo.id);
+               if (expandedContainer) {
+                  //@ts-ignore
+                  expandedContainer.style.height = null;
+               }
+            }, 400);
+         });
       }
    }
 
@@ -228,8 +258,8 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       <div className={searchContainerStyle}>
          {repos.length ? <div className={`${accordeon} ${close_search}`} onClick={() => closeSearch(document.querySelector('#search>input') as HTMLInputElement)}>✕</div> : ''}
          <ul class={style.repo_list}>
-            {repos.map(repo => {
-               return <li class={style.repo_block} tabIndex={1} onKeyDown={(e) => expandBranchBtnFocus(e, repo)} >
+            {'length' in repos ? repos.map(repo => {
+               return <li class={style.repo_block} tabIndex={1} id={repo.id.toString()} onKeyDown={(e) => expandBranchBtnFocus(e, repo)} >
                   {/*  tabIndex={0} */}
                   <a href={repo.html_url}><h3 className={css`margin: .5em 0;display:inline-block;`}>{repo.name}</h3></a>
                   <p className={css`margin: .5em 0;`}>{repo.description || ''}</p>
@@ -253,7 +283,13 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
                         : ''
                   }                  
                </li>               
-            })}
+            }) : <div className={css`
+               text-align: center;
+               color: #aa4343;    
+               text-transform: uppercase;
+               text-shadow: 0 0 5px white;`}>
+               API rate limit exceeded!!!
+            </div>}
          </ul>
       </div>
    </>);

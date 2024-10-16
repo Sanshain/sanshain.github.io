@@ -19,7 +19,7 @@
     /* cursor: pointer; */
     border-radius: .75em;
     border: 1px solid transparent;
-    transition: .3s;
+    transition: .3s linear;
     outline: none;
 
     a{

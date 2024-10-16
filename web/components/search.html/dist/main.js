@@ -53,7 +53,7 @@
     }
   }
 
-  var css_248z = ".style_header__3t_1_{color:red;color:#00f}.style_repo_list__233KR{padding:2em 1em}.style_repo_block__3lNVy{position:relative;list-style-type:none;box-shadow:0 0 5px #fff;color:#fff;width:calc(100% - 4em);padding:.5em 1em;margin:.8em .2em;border-radius:.75em;border:1px solid transparent;transition:.3s;outline:none}.style_repo_block__3lNVy a{color:#fff}.style_repo_block__3lNVy:focus{border:1px solid #add8e6;box-shadow:0 0 15px grey}.style_repo_block__3lNVy:hover{box-shadow:0 0 15px #fff;background-color:rgba(0,0,0,.11)}";
+  var css_248z = ".style_header__3t_1_{color:red;color:#00f}.style_repo_list__233KR{padding:2em 1em}.style_repo_block__3lNVy{position:relative;list-style-type:none;box-shadow:0 0 5px #fff;color:#fff;width:calc(100% - 4em);padding:.5em 1em;margin:.8em .2em;border-radius:.75em;border:1px solid transparent;transition:.3s linear;outline:none}.style_repo_block__3lNVy a{color:#fff}.style_repo_block__3lNVy:focus{border:1px solid #add8e6;box-shadow:0 0 15px grey}.style_repo_block__3lNVy:hover{box-shadow:0 0 15px #fff;background-color:rgba(0,0,0,.11)}";
   var style = {"header":"style_header__3t_1_","repo_list":"style_repo_list__233KR","repo_block":"style_repo_block__3lNVy"};
   styleInject(css_248z, undefined, "12xcavg");
   if (window.import && window.import.meta.hot) window.import.meta.hot.accept();
@@ -70,6 +70,7 @@
   //   color: red;
   // `;
   const searchContainerStyle = "suwg8pj";
+  let prevExpandedHeight = null;
   function App({
     onFocus,
     onBlur
@@ -148,20 +149,39 @@
       console.warn(e['code']);
     }
     function expandBranchList(e, repo) {
+      if (expandedRepo == repo.id) ;
       const target = e.currentTarget;
       target.style['transform'] = 'rotate(270deg)';
       if (!repo.branches) fetch(repo.branches_url.replace(/\{[\w\/]+\}/, '')).then(r => r.json()).then(r => {
-        console.log(r);
         repo.branches = r.map(v => v.name);
-        const container = target.parentElement;
-        // container.style.height = container.offsetHeight + 'px';
+        animateBranchesAppearing();
+      });else {
+        // setExpand(repo.id)
+        animateBranchesAppearing();
+      }
+      function animateBranchesAppearing() {
+        const handlingContainer = target.parentElement;
+        const expandedContainer = document.getElementById(expandedRepo.toString());
+        const _prevExpandedHeight = prevExpandedHeight;
+        handlingContainer.style.height = (prevExpandedHeight = handlingContainer.clientHeight - 16) + 'px';
+        setExpand(NaN);
+        setTimeout(() => {
+          if (_prevExpandedHeight && expandedContainer) {
+            // console.log(_prevExpandedHeight, prevExpandedHeight);               
+            expandedContainer.style.height = _prevExpandedHeight + 'px';
+          }
+        });
         setTimeout(() => {
           var _a;
-          container.style.height = container.offsetHeight + (((_a = repo.branches) === null || _a === void 0 ? void 0 : _a.length) || 0) * 28 - 10 + 'px';
-          setTimeout(() => setExpand(repo.id), 400);
+          handlingContainer.style.height = handlingContainer.clientHeight + (((_a = repo.branches) === null || _a === void 0 ? void 0 : _a.length) || 0) * 26 - 10 + 'px';
+          setTimeout(() => {
+            setExpand(repo.id);
+            if (expandedContainer) {
+              //@ts-ignore
+              expandedContainer.style.height = null;
+            }
+          }, 400);
         });
-      });else {
-        setExpand(repo.id);
       }
     }
     const branchesStyle = "b1kc2ny1";
@@ -189,10 +209,11 @@
           children: "\u2715"
         }) : '', u$1("ul", {
           class: style.repo_list,
-          children: repos.map(repo => {
+          children: 'length' in repos ? repos.map(repo => {
             return u$1("li", {
               class: style.repo_block,
               tabIndex: 1,
+              id: repo.id.toString(),
               onKeyDown: e => expandBranchBtnFocus(e, repo),
               children: [u$1("a", {
                 href: repo.html_url,
@@ -232,6 +253,9 @@
                 })
               }) : '']
             });
+          }) : u$1("div", {
+            className: "c8pxf0e",
+            children: "API rate limit exceeded!!!"
           })
         })]
       })]
