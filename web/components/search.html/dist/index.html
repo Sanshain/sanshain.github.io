@@ -1,0 +1,50 @@
+<style>
+    .search {
+        position: fixed;
+        top: 60vh;
+        width: 100%;
+    }
+
+    input {
+        margin: auto;
+        display: block;
+        padding: .3em 1em;
+        border-radius: 1em;
+        border: 1px solid lightcyan;
+        box-shadow: 0 0 15px ghostwhite;
+        opacity: .6;
+        min-width: 30em;
+        outline: none;
+        transition: 1s;
+        font-size: medium;
+        caret-color: #6593bb;
+        color: slategray;
+    }
+
+    input:hover {
+        opacity: .7;
+    }
+
+    input:focus {
+        opacity: .9;
+    }
+
+    /* input::placeholder{
+        color: aliceblue;
+    } */
+</style>
+
+
+<div id="search">
+    <!-- <input type="search" placeholder="Start typing repository name you want..." autofocus />
+    <div class="repo_list">
+        
+    </div> -->
+</div>
+
+<script>
+    window.process = {
+        env: {}
+    }
+</script>
+<script src="./main.js"></script>
