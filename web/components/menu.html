@@ -5,13 +5,13 @@
     <div class="line"></div>
 </div>
 <div class="menu">    
-    <a class="point" href="/">Home</a>
-    <a class="point" href="/pages/slider">Slider</a>
-    <a class="point"  href="/pages/preloader">Loader</a>
-    <a class="point" href="/graphql-types-generator">
+    <a tabindex="-1" class="point" href="/">Home</a>
+    <a tabindex="-1" class="point" href="/pages/slider">Slider</a>
+    <a tabindex="-1" class="point"  href="/pages/preloader">Loader</a>
+    <a tabindex="-1" class="point" href="/graphql-types-generator">
         <img src="/images/logos/github.png" alt="" height="16" width="16"> Types generator
     </a>
-    <a class="point" href="https://github.com/Sanshain/gql-queries-autogenerator">
+    <a tabindex="-1" class="point" href="https://github.com/Sanshain/gql-queries-autogenerator">
         Queries generator
     </a>
     <!-- <div class="point">Queries generator</div> -->
@@ -22,6 +22,8 @@
 <div class="background"></div>
 
 <script>
+    // let activePoint = '';
+
     document.querySelector('.menu').onclick = (e) => {        
         e.preventDefault();        
         setTimeout(() => document.location = e.target.href, 350)
