@@ -1,6 +1,6 @@
 
 import { ComponentChildren, h } from "preact";
-import { useState, useEffect } from "preact/hooks";
+import { useState, useEffect, useReducer } from "preact/hooks";
 import style from "./style.css";          // import './style.css'
 
 import { GithubRepoInfo } from './typing/response'
@@ -113,6 +113,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       z-index: 2;
       transition:.5s;
       outline: none;
+      cursor: pointer;
       
       &:hover, &:focus {
          box-shadow: 0 0 15px white;
@@ -151,21 +152,57 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
          fetchBranches(ev as { currentTarget: EventTarget}, repo.branches_url)
       }
       else if (~e['code'].indexOf('Enter')) {
-         window.open(repo.html_url, '_blank');   // <- also TODO type it via types-spring         
+         console.log(document.activeElement)
+         if (document.activeElement?.classList.contains('branches_btn')) {
+            expandBranchList({currentTarget: document.activeElement}, repo);
+         }
+         else {            
+            window.open(repo.html_url, '_blank');   // <- also TODO type it via types-spring         
+         }
       }
 
       console.warn(e['code'])
    }
 
-   function expandBranchList(e: Event, repo: GithubRepoInfo) {
+   function expandBranchList(e: { currentTarget: Element }, repo: GithubRepoInfo) {
       const target = (e.currentTarget as HTMLElement)
       target.style['transform'] = 'rotate(270deg)';
 
-      fetch(repo.branches_url).then(r => r.json()).then(r => {
+      if (!repo.branches) fetch(repo.branches_url.replace(/\{[\w\/]+\}/, '')).then(r => r.json()).then((r: Array<{name: string}>) => {
+         console.log(r);
+         repo.branches = r.map(v => v.name);
+         
+         const container = target.parentElement as HTMLElement;
+         // container.style.height = container.offsetHeight + 'px';
 
+         setTimeout(() => {
+            container.style.height = container.offsetHeight + (repo.branches?.length || 0) * 28 - 10 + 'px';
+            setTimeout(() => setExpand(repo.id), 400);
+         })         
+         
       })
+      else{
+         setExpand(repo.id)
+      }
    }
 
+   const branchesStyle = css`
+      margin: .5em 0;
+      padding: 0;
+      margin-top: 1em;
+
+      &>li{
+         list-style-type: none;
+         margin: .5em;
+      }
+   `;
+
+   const [, rerender] = useReducer(() => NaN, null);
+   /**
+    * @description current repo with shown branches
+    */
+   const [expandedRepo, setExpand] = useState(NaN);
+   
    const [branches, setBranches] = useState<{ repo: number, branches: Array<{}> } | null>(null);
 
    return (<>
@@ -187,7 +224,16 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
                   <div className={`${accordeon} branches_btn`} tabIndex={1} onMouseOver={e => fetchBranches(e, repo.branches_url)} onClick={e => expandBranchList(e, repo)}>
                      &lt;
                   </div>
-               </li>
+                  {
+                     (expandedRepo == repo.id && repo.branches)
+                        ? <ul className={branchesStyle}>{repo.branches.map(branchname => {
+                           return <li>
+                              <a href={`${repo.html_url}#${branchname}`}>{branchname}</a>
+                           </li>
+                        })}</ul>
+                        : ''
+                  }                  
+               </li>               
             })}
          </ul>
       </div>

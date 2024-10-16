@@ -16,7 +16,7 @@
     width: calc(100% - 4em);
     padding: .5em 1em;
     margin: .8em .2em;
-    cursor: pointer;
+    /* cursor: pointer; */
     border-radius: .75em;
     border: 1px solid transparent;
     transition: .3s;

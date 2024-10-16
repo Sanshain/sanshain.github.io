@@ -26,6 +26,8 @@ export type GithubRepoInfo = {
     // ssh_url: `git@github.com:${string}/${string}.git`,
     // updated_at: DateString,
     // created_at: DateString,
+
+    branches?: string[],
 }
 
 
