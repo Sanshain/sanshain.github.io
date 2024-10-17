@@ -1,8 +1,10 @@
-export function copyText(e: KeyboardEnhancedEvent) {
-    console.log(e.code)    
-    if (e.code == 'Escape' && e.ctrlKey) {
-        alert(9)
-    }    
+import { GithubRepoInfo } from "../typing/response"
+
+export function copyBranchUrl(e: KeyboardEnhancedEvent<HTMLAnchorElement>, repo: GithubRepoInfo) {
+    console.log(e.code, e.ctrlKey)
+    if (e.code == 'KeyC' && e.ctrlKey) {
+        navigator.clipboard.writeText(`degit ${repo.html_url}#${e.currentTarget.textContent}`)
+    }
 }
 
 

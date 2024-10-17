@@ -58,10 +58,10 @@
   styleInject(css_248z, undefined, "12xcavg");
   if (window.import && window.import.meta.hot) window.import.meta.hot.accept();
 
-  function copyText(e) {
-      console.log(e.code);
-      if (e.code == 'Escape' && e.ctrlKey) {
-          alert(9);
+  function copyBranchUrl(e, repo) {
+      console.log(e.code, e.ctrlKey);
+      if (e.code == 'KeyC' && e.ctrlKey) {
+          navigator.clipboard.writeText(`degit ${repo.html_url}#${e.currentTarget.textContent}`);
       }
   }
 
@@ -297,7 +297,7 @@
                         children: u$1("a", {
                           href: `${repo.html_url}#${branchname}`,
                           className: branch_link,
-                          onKeyDown: copyText,
+                          onKeyDown: e => copyBranchUrl(e, repo),
                           children: branchname
                         })
                       });

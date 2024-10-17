@@ -10,7 +10,7 @@ import { debounce } from './utils/debounce';
 
 // till just with css:
 import { css } from '@linaria/core';
-import { copyText } from "./utils/copy";
+import { copyBranchUrl } from "./utils/copy";
 
 
 const user = localStorage.getItem('user') || "Sanshain";
@@ -360,7 +360,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
                                  {repo.branches.filter(b => ~b.indexOf(branchSearch)).map(branchname => {
                                     //  style={{ display: ~branchname.indexOf(branchSearch) ? '' : 'none' }}
                                     return <li>
-                                       <a href={`${repo.html_url}#${branchname}`} className={branch_link} onKeyDown={copyText}>{branchname}</a>
+                                       <a href={`${repo.html_url}#${branchname}`} className={branch_link} onKeyDown={e => copyBranchUrl(e, repo)}>{branchname}</a>
                                        {/* <span style={{ marginLeft: '1em'}}>🗐</span> */}
                                     </li>
                                  })}

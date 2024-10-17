@@ -12,8 +12,9 @@ declare module '*.css' {
 
 type RarelyUsedKeys = 'BracketRight' | 'BracketLeft' | 'AltLeft' | 'ControlLeft' | 'AltRight' | 'ControlRight' | 'MetaLeft' | 'MetaRight' | 'KeyZ' | 'KeyA' | 'KeyX';
 
-interface KeyboardEnhancedEvent extends KeyboardEvent {
-    code: RarelyUsedKeys | 'KeyC' | 'KeyV' | 'KeyS' | 'Enter' | 'NumpadEnter' | 'Delete' | 'Escape' | 'ArrowUp' | 'ArrowDown' | 'ArrowLeft' | 'ArrowRight' | 'Tab' | string & {};
+interface KeyboardEnhancedEvent<Input = EventTarget> extends KeyboardEvent {
+    code: RarelyUsedKeys | 'KeyC' | 'KeyV' | 'KeyS' | 'Enter' | 'NumpadEnter' | 'Delete' | 'Escape' | 'ArrowUp' | 'ArrowDown' | 'ArrowLeft' | 'ArrowRight' | 'Tab' | string & {}
+    currentTarget: Input
 }
 
 interface DOMElement extends Element {
