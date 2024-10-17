@@ -53,15 +53,19 @@
     }
   }
 
-  var css_248z = ".style_header__3t_1_{color:red;color:#00f}.style_repo_list__233KR{padding:2em 1em}.style_repo_block__3lNVy{position:relative;list-style-type:none;box-shadow:0 0 5px #fff;color:#fff;width:calc(100% - 4em);padding:.5em 1em;margin:.8em .2em;border-radius:.75em;border:1px solid transparent;transition:.3s linear;outline:none}.style_repo_block__3lNVy a{color:#fff}.style_repo_block__3lNVy:focus{border:1px solid #add8e6;box-shadow:0 0 15px grey}.style_repo_block__3lNVy:hover{box-shadow:0 0 15px #fff;background-color:rgba(0,0,0,.11)}";
+  var css_248z = ".style_header__3t_1_{color:red;color:#00f}ul.style_repo_list__233KR{padding:2em 1em}li.style_repo_block__3lNVy{position:relative;list-style-type:none;box-shadow:0 0 5px #fff;color:#fff;width:calc(100% - 4em);padding:.5em 1em;margin:.8em .2em;border-radius:.75em;border:1px solid transparent;transition:.3s linear;outline:none;max-height:550px}li.style_repo_block__3lNVy a{color:#fff}li.style_repo_block__3lNVy:focus{border:1px solid #add8e6;box-shadow:0 0 15px grey}.style_repo_block__3lNVy:hover{box-shadow:0 0 15px #fff;background-color:rgba(0,0,0,.11)}";
   var style = {"header":"style_header__3t_1_","repo_list":"style_repo_list__233KR","repo_block":"style_repo_block__3lNVy"};
   styleInject(css_248z, undefined, "12xcavg");
   if (window.import && window.import.meta.hot) window.import.meta.hot.accept();
 
-  false;
+  function copyText(e) {
+      console.log(e.code);
+      if (e.code == 'Escape' && e.ctrlKey) {
+          alert(9);
+      }
+  }
 
-  /// @ LINAIRIA:
-  // till just with css:
+  false;
 
   const user = localStorage.getItem('user') || "Sanshain";
   let repos$ = [];
@@ -127,7 +131,7 @@
       });
     }
     function expandBranchBtnFocus(e, repo) {
-      var _a;
+      var _a, _b;
       if (e['code'] == 'NumpadAdd') {
         const target = e.currentTarget.querySelector('.branches_btn');
         target.focus();
@@ -143,16 +147,26 @@
             currentTarget: document.activeElement
           }, repo);
         } else {
-          window.open(repo.html_url, '_blank'); // <- also TODO type it via types-spring         
+          window.open(((_b = document.activeElement) === null || _b === void 0 ? void 0 : _b.tagName) == 'A' ? document.activeElement.href : repo.html_url, '_blank');
+          e.preventDefault();
+          // <- also TODO type it via types-spring (_blank)
+          // ^- also TODO type for tagName
         }
       }
       console.warn(e['code']);
     }
     function expandBranchList(e, repo) {
-      if (expandedRepo == repo.id) ;
       const target = e.currentTarget;
+      if (expandedRepo == repo.id) {
+        collapsCurrentRepo();
+        target.style['transform'] = 'rotate(0deg)';
+        return;
+      }
       target.style['transform'] = 'rotate(270deg)';
       if (!repo.branches) fetch(repo.branches_url.replace(/\{[\w\/]+\}/, '')).then(r => r.json()).then(r => {
+        if ('message' in r) {
+          return alert(r.message);
+        }
         repo.branches = r.map(v => v.name);
         animateBranchesAppearing();
       });else {
@@ -161,27 +175,38 @@
       }
       function animateBranchesAppearing() {
         const handlingContainer = target.parentElement;
-        const expandedContainer = document.getElementById(expandedRepo.toString());
-        const _prevExpandedHeight = prevExpandedHeight;
+        const expandedContainer = collapsCurrentRepo();
         handlingContainer.style.height = (prevExpandedHeight = handlingContainer.clientHeight - 16) + 'px';
-        setExpand(NaN);
-        setTimeout(() => {
-          if (_prevExpandedHeight && expandedContainer) {
-            // console.log(_prevExpandedHeight, prevExpandedHeight);               
-            expandedContainer.style.height = _prevExpandedHeight + 'px';
-          }
-        });
         setTimeout(() => {
           var _a;
-          handlingContainer.style.height = handlingContainer.clientHeight + (((_a = repo.branches) === null || _a === void 0 ? void 0 : _a.length) || 0) * 26 - 10 + 'px';
+          handlingContainer.style.height = handlingContainer.clientHeight + (((_a = repo.branches) === null || _a === void 0 ? void 0 : _a.length) || 0) * 26 - 0 + 'px';
           setTimeout(() => {
             setExpand(repo.id);
             if (expandedContainer) {
               //@ts-ignore
               expandedContainer.style.height = null;
             }
+            /// move to useEffect:
+            setTimeout(() => {
+              const branchInput = handlingContainer.querySelector('input');
+              if (branchInput) {
+                branchInput.focus();
+              }
+            });
           }, 400);
         });
+      }
+      function collapsCurrentRepo() {
+        const _prevExpandedHeight = prevExpandedHeight;
+        const expandedContainer = document.getElementById(expandedRepo.toString());
+        setTimeout(() => {
+          if (_prevExpandedHeight && expandedContainer) {
+            // console.log(_prevExpandedHeight, prevExpandedHeight);               
+            expandedContainer.style.height = _prevExpandedHeight + 'px';
+          }
+        });
+        setExpand(NaN);
+        return expandedContainer;
       }
     }
     const branchesStyle = "b1kc2ny1";
@@ -192,6 +217,10 @@
     const [expandedRepo, setExpand] = p(NaN);
     p(null);
     const close_search = "c1pzzxzi";
+    const branch_input = "b1gv4ixx";
+    const branches_container = "bhbdon0";
+    const [branchSearch, setBranchSearch] = p('');
+    const branch_link = "b8pxf0e";
     // const close_search = accordeon;
     return u$1(k$1, {
       children: [u$1("input", {
@@ -218,11 +247,11 @@
               children: [u$1("a", {
                 href: repo.html_url,
                 children: u$1("h3", {
-                  className: "c1gv4ixx",
+                  className: "c7yifyx",
                   children: repo.name
                 })
               }), u$1("p", {
-                className: "chbdon0",
+                className: "c12wpk68",
                 children: repo.description || ''
               }), u$1("div", {
                 className: tags,
@@ -241,20 +270,44 @@
                 onMouseOver: e => fetchBranches(e, repo.branches_url),
                 onClick: e => expandBranchList(e, repo),
                 children: "<"
-              }), expandedRepo == repo.id && repo.branches ? u$1("ul", {
-                className: branchesStyle,
-                children: repo.branches.map(branchname => {
-                  return u$1("li", {
-                    children: u$1("a", {
-                      href: `${repo.html_url}#${branchname}`,
-                      children: branchname
+              }), expandedRepo == repo.id && repo.branches ? u$1(k$1, {
+                children: [repo.branches.length > 10 ? u$1("input", {
+                  type: "search",
+                  className: branch_input,
+                  placeholder: "Enter branch name...",
+                  onInput: e => setBranchSearch(e.currentTarget.value)
+                }) : '', u$1("div", {
+                  className: branches_container,
+                  children: u$1("ol", {
+                    className: branchesStyle,
+                    onKeyDown: e => {
+                      var _a, _b, _c, _d, _e, _f;
+                      if (e.code == 'ArrowUp') {
+                        const next = (_c = (_b = (_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.parentElement) === null || _b === void 0 ? void 0 : _b.previousElementSibling) === null || _c === void 0 ? void 0 : _c.querySelector('a');
+                        console.log(next);
+                        if (next && 'focus' in next) next.focus();else {
+                          (_f = (_e = (_d = e.currentTarget.closest(`.${branches_container}`)) === null || _d === void 0 ? void 0 : _d.parentElement) === null || _e === void 0 ? void 0 : _e.querySelector('input')) === null || _f === void 0 ? void 0 : _f.focus();
+                        }
+                        e.preventDefault();
+                      }
+                    },
+                    children: repo.branches.filter(b => ~b.indexOf(branchSearch)).map(branchname => {
+                      //  style={{ display: ~branchname.indexOf(branchSearch) ? '' : 'none' }}
+                      return u$1("li", {
+                        children: u$1("a", {
+                          href: `${repo.html_url}#${branchname}`,
+                          className: branch_link,
+                          onKeyDown: copyText,
+                          children: branchname
+                        })
+                      });
                     })
-                  });
-                })
+                  })
+                })]
               }) : '']
             });
           }) : u$1("div", {
-            className: "c8pxf0e",
+            className: "c1gr8d2i",
             children: "API rate limit exceeded!!!"
           })
         })]

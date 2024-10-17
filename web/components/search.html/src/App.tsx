@@ -1,6 +1,6 @@
 
 import { ComponentChildren, h } from "preact";
-import { useState, useEffect, useReducer } from "preact/hooks";
+import { useState, useEffect, useReducer, useRef } from "preact/hooks";
 import style from "./style.css";          // import './style.css'
 
 import { GithubRepoInfo } from './typing/response'
@@ -10,6 +10,7 @@ import { debounce } from './utils/debounce';
 
 // till just with css:
 import { css } from '@linaria/core';
+import { copyText } from "./utils/copy";
 
 
 const user = localStorage.getItem('user') || "Sanshain";
@@ -154,7 +155,10 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
             expandBranchList({currentTarget: document.activeElement}, repo);
          }
          else {            
-            window.open(repo.html_url, '_blank');   // <- also TODO type it via types-spring         
+            window.open(document.activeElement?.tagName == 'A' ? (document.activeElement as HTMLAnchorElement).href : repo.html_url, '_blank');            
+            e.preventDefault()
+            // <- also TODO type it via types-spring (_blank)
+            // ^- also TODO type for tagName
          }
       }
 
@@ -163,16 +167,22 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
 
    function expandBranchList(e: { currentTarget: Element }, repo: GithubRepoInfo) {
 
+      const target = (e.currentTarget as HTMLElement)
 
       if (expandedRepo == repo.id) {
-         
+         collapsCurrentRepo();
+         target.style['transform'] = 'rotate(0deg)';
+         return;
       }
 
-      const target = (e.currentTarget as HTMLElement)
       target.style['transform'] = 'rotate(270deg)';
 
-      if (!repo.branches) fetch(repo.branches_url.replace(/\{[\w\/]+\}/, '')).then(r => r.json()).then((r: Array<{ name: string }>) => {
+      if (!repo.branches) fetch(repo.branches_url.replace(/\{[\w\/]+\}/, '')).then(r => r.json()).then((r: Array<{ name: string }> | { message: string }) => {
          
+         if ('message' in r) {            
+            return alert(r.message);            
+         }            
+            
          repo.branches = r.map(v => v.name);
          
          animateBranchesAppearing();
@@ -185,29 +195,42 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       function animateBranchesAppearing() {
          
          const handlingContainer = target.parentElement as HTMLElement;
-         const expandedContainer = document.getElementById(expandedRepo.toString());
-                                 
-         const _prevExpandedHeight = prevExpandedHeight;
+         
+         const expandedContainer = collapsCurrentRepo();
+
          handlingContainer.style.height = (prevExpandedHeight = handlingContainer.clientHeight - 16) + 'px';
-         setExpand(NaN)
-      
-         setTimeout(() => {            
-            if (_prevExpandedHeight && expandedContainer) {
-               // console.log(_prevExpandedHeight, prevExpandedHeight);               
-               expandedContainer.style.height = _prevExpandedHeight + 'px';
-            }
-         });
 
          setTimeout(() => {
-            handlingContainer.style.height = handlingContainer.clientHeight + (repo.branches?.length || 0) * 26 - 10 + 'px';            
+            handlingContainer.style.height = handlingContainer.clientHeight + (repo.branches?.length || 0) * 26 - 0 + 'px';            
             setTimeout(() => {
                setExpand(repo.id);
                if (expandedContainer) {
                   //@ts-ignore
                   expandedContainer.style.height = null;
                }
+               /// move to useEffect:
+               setTimeout(() => {
+                  const branchInput = handlingContainer.querySelector('input');
+                  if (branchInput) {
+                     branchInput.focus()
+                  }
+               })
             }, 400);
          });
+      }
+
+      function collapsCurrentRepo() {
+         const _prevExpandedHeight = prevExpandedHeight;
+         const expandedContainer = document.getElementById(expandedRepo.toString());
+         setTimeout(() => {
+            if (_prevExpandedHeight && expandedContainer) {
+               // console.log(_prevExpandedHeight, prevExpandedHeight);               
+               expandedContainer.style.height = _prevExpandedHeight + 'px';
+            }
+         });
+
+         setExpand(NaN);
+         return expandedContainer;
       }
    }
 
@@ -215,10 +238,16 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       margin: .5em 0;
       padding: 0;
       margin-top: 1em;
+      margin-left: 1em;
 
       &>li{
-         list-style-type: none;
+         /* list-style-type: none; */
          margin: .5em;
+         padding-left: 1em;
+         
+         &>a:hover{
+            color: aquamarine;
+         }
       }
    `;
 
@@ -251,6 +280,41 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       } */
    `
 
+   const branch_input = css`
+      width: 90%;
+      margin-top: 2em;
+      
+      &::placeholder{
+         color: lightgray;
+         font-size:small
+      }
+   `;
+   
+   const branches_container = css`
+      max-height: 310px;
+      overflow: scroll;
+   `;
+
+   const [branchSearch, setBranchSearch] = useState<string>('')
+
+   const branch_link = css`
+
+      position: relative;
+      outline: none;
+
+      &:focus{
+         border-bottom: 1.5px solid gray;
+
+         &::after{
+            content: '<- ctrl+c';
+            position: absolute;
+            color: gray;
+            right: -5em;
+            outline: none;
+         }
+      }
+   `
+   
    // const close_search = accordeon;
 
    return (<>
@@ -275,11 +339,34 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
                   </div>
                   {
                      (expandedRepo == repo.id && repo.branches)
-                        ? <ul className={branchesStyle}>{repo.branches.map(branchname => {
-                           return <li>
-                              <a href={`${repo.html_url}#${branchname}`}>{branchname}</a>
-                           </li>
-                        })}</ul>
+                        ? <>
+                           {repo.branches.length > 10
+                              ? <input type="search" className={branch_input} placeholder="Enter branch name..." onInput={e => setBranchSearch(e.currentTarget.value) } />
+                              : ''}
+                              
+                           <div className={branches_container}>
+                              <ol className={branchesStyle} onKeyDown={e => {
+                                 if (e.code == 'ArrowUp') {                                    
+                                    const next = document.activeElement?.parentElement?.previousElementSibling?.querySelector('a');
+                                    console.log(next);                                    
+                                    
+                                    if (next && 'focus' in next) (next as HTMLAnchorElement).focus()
+                                    else {
+                                       e.currentTarget.closest(`.${branches_container}`)?.parentElement?.querySelector('input')?.focus()
+                                    }
+                                    e.preventDefault()
+                                 }
+                              }}>
+                                 {repo.branches.filter(b => ~b.indexOf(branchSearch)).map(branchname => {
+                                    //  style={{ display: ~branchname.indexOf(branchSearch) ? '' : 'none' }}
+                                    return <li>
+                                       <a href={`${repo.html_url}#${branchname}`} className={branch_link} onKeyDown={copyText}>{branchname}</a>
+                                       {/* <span style={{ marginLeft: '1em'}}>🗐</span> */}
+                                    </li>
+                                 })}
+                              </ol>
+                           </div>
+                        </>
                         : ''
                   }                  
                </li>               
