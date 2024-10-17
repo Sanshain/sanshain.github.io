@@ -56,7 +56,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
    }
 
    function onEscape(e: KeyboardEvent) {
-      console.log(e.key)
+      // console.log(e.key)
       if (e.code == 'Escape') {
          const target = e.currentTarget as HTMLInputElement;
          closeSearch(target);
@@ -150,7 +150,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
          fetchBranches(ev as { currentTarget: EventTarget}, repo.branches_url)
       }
       else if (~e['code'].indexOf('Enter')) {
-         console.log(document.activeElement)
+         // console.log(document.activeElement)
          if (document.activeElement?.classList.contains('branches_btn')) {
             expandBranchList({currentTarget: document.activeElement}, repo);
          }
@@ -162,7 +162,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
          }
       }
 
-      console.warn(e['code'])
+      // console.warn(e['code'])
    }   
 
    function expandBranchList(e: { currentTarget: Element }, repo: GithubRepoInfo) {

@@ -59,7 +59,7 @@
   if (window.import && window.import.meta.hot) window.import.meta.hot.accept();
 
   function copyBranchUrl(e, repo) {
-      console.log(e.code, e.ctrlKey);
+      // console.log(e.code, e.ctrlKey)
       if (e.code == 'KeyC' && e.ctrlKey) {
           navigator.clipboard.writeText(`degit ${repo.html_url}#${e.currentTarget.textContent}`);
       }
@@ -98,7 +98,7 @@
       }
     }
     function onEscape(e) {
-      console.log(e.key);
+      // console.log(e.key)
       if (e.code == 'Escape') {
         const target = e.currentTarget;
         closeSearch(target);
@@ -141,7 +141,7 @@
         };
         fetchBranches(ev, repo.branches_url);
       } else if (~e['code'].indexOf('Enter')) {
-        console.log(document.activeElement);
+        // console.log(document.activeElement)
         if ((_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.classList.contains('branches_btn')) {
           expandBranchList({
             currentTarget: document.activeElement
@@ -153,7 +153,7 @@
           // ^- also TODO type for tagName
         }
       }
-      console.warn(e['code']);
+      // console.warn(e['code'])
     }
     function expandBranchList(e, repo) {
       const target = e.currentTarget;
