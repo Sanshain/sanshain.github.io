@@ -45,10 +45,10 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
    function onInput(e: InputEvent) {
       const target = e.currentTarget as HTMLInputElement;
       if (target.value.length > 2) {
-         updateRepos(v => repos$.filter(v => ~v.name.indexOf(target.value)))
+         updateRepos(v => repos$.filter(v => ~v.name.indexOf(target.value.toLocaleLowerCase())))
       }
       else if (target.value) {
-         updateRepos(v => repos$.filter(v => v.name.startsWith(target.value)))
+         updateRepos(v => repos$.filter(v => v.name.startsWith(target.value.toLocaleLowerCase())))
       }
       else {
          updateRepos(v => repos$)
@@ -280,7 +280,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       } */
 
       @media screen and (max-width: 640px) {
-         top: 1.3rem;
+         top: 1.1rem;
          right: 1.5rem;
       }
 
