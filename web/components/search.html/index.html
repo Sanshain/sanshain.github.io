@@ -1,12 +1,12 @@
 <style>
-    #search{
+    #search {
         position: fixed;
         top: 60vh;
         width: 100%;
         transition: .5s;
-    }        
+    }
 
-    input{
+    input {
         margin: auto;
         display: block;
         padding: .3em 1em;
@@ -15,24 +15,32 @@
         box-shadow: 0 0 15px ghostwhite;
         opacity: .4;
         min-width: 30em;
-        outline: none;            
-        transition: 1s;  
+        outline: none;
+        transition: 1s;
         font-size: medium;
         caret-color: #6593bb;
         color: slategray;
-    }    
-    
-    input:hover{
-        opacity: .7;            
     }
 
-    input:focus{
-        opacity: .9;            
-    }    
+    input:hover {
+        opacity: .7;
+    }
+
+    input:focus {
+        opacity: .9;
+    }
 
     /* input::placeholder{
         color: aliceblue;
     } */
+
+    @media screen and (max-width: 640px) {
+        #search>input {
+            min-width: calc(100% - 9.5em);
+            top: -.5em;
+            position: relative;
+        }
+    }
 </style>
 
 <div id="search">

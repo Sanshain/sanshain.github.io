@@ -117,7 +117,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
    `;
 
    function closeSearch(input: HTMLInputElement) {
-      updateRepos(v => []);      
+      updateRepos(v => []);
       input.value = '';
       input.blur();
       onBlur();
@@ -136,7 +136,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
             //@ts-expect-error
             target.parentElement.style.backgroundColor = null;
          }
-      }, {once: true})
+      }, { once: true })
    }
 
    function expandBranchBtnFocus(e: KeyboardEvent, repo: GithubRepoInfo) {
@@ -147,15 +147,15 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
          const ev = {
             currentTarget: (e.currentTarget as HTMLElement).querySelector('.branches_btn')
          }
-         fetchBranches(ev as { currentTarget: EventTarget}, repo.branches_url)
+         fetchBranches(ev as { currentTarget: EventTarget }, repo.branches_url)
       }
       else if (~e['code'].indexOf('Enter')) {
          // console.log(document.activeElement)
          if (document.activeElement?.classList.contains('branches_btn')) {
-            expandBranchList({currentTarget: document.activeElement}, repo);
+            expandBranchList({ currentTarget: document.activeElement }, repo);
          }
-         else {            
-            window.open(document.activeElement?.tagName == 'A' ? (document.activeElement as HTMLAnchorElement).href : repo.html_url, '_blank');            
+         else {
+            window.open(document.activeElement?.tagName == 'A' ? (document.activeElement as HTMLAnchorElement).href : repo.html_url, '_blank');
             e.preventDefault()
             // <- also TODO type it via types-spring (_blank)
             // ^- also TODO type for tagName
@@ -163,7 +163,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       }
 
       // console.warn(e['code'])
-   }   
+   }
 
    function expandBranchList(e: { currentTarget: Element }, repo: GithubRepoInfo) {
 
@@ -178,30 +178,30 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       target.style['transform'] = 'rotate(270deg)';
 
       if (!repo.branches) fetch(repo.branches_url.replace(/\{[\w\/]+\}/, '')).then(r => r.json()).then((r: Array<{ name: string }> | { message: string }) => {
-         
-         if ('message' in r) {            
-            return alert(r.message);            
-         }            
-            
+
+         if ('message' in r) {
+            return alert(r.message);
+         }
+
          repo.branches = r.map(v => v.name);
-         
+
          animateBranchesAppearing();
       })
-      else{
+      else {
          // setExpand(repo.id)
          animateBranchesAppearing();
       }
 
       function animateBranchesAppearing() {
-         
+
          const handlingContainer = target.parentElement as HTMLElement;
-         
+
          const expandedContainer = collapsCurrentRepo();
 
          handlingContainer.style.height = (prevExpandedHeight = handlingContainer.clientHeight - 16) + 'px';
 
          setTimeout(() => {
-            handlingContainer.style.height = handlingContainer.clientHeight + (repo.branches?.length || 0) * 26 - 0 + 'px';            
+            handlingContainer.style.height = handlingContainer.clientHeight + (repo.branches?.length || 0) * 26 - 0 + 'px';
             setTimeout(() => {
                setExpand(repo.id);
                if (expandedContainer) {
@@ -256,7 +256,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
     * @description current repo with shown branches
     */
    const [expandedRepo, setExpand] = useState(NaN);
-   
+
    const [branches, setBranches] = useState<{ repo: number, branches: Array<{}> } | null>(null);
 
    const close_search = css`
@@ -278,6 +278,12 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
       &:hover{
          box-shadow: 0 0 15px gray;
       } */
+
+      @media screen and (max-width: 640px) {
+         top: 1.3rem;
+         right: 1.5rem;
+      }
+
    `
 
    const branch_input = css`
@@ -289,7 +295,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
          font-size:small
       }
    `;
-   
+
    const branches_container = css`
       max-height: 310px;
       overflow: scroll;
@@ -314,7 +320,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
          }
       }
    `
-   
+
    // const close_search = accordeon;
 
    return (<>
@@ -341,15 +347,15 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
                      (expandedRepo == repo.id && repo.branches)
                         ? <>
                            {repo.branches.length > 10
-                              ? <input type="search" className={branch_input} placeholder="Enter branch name..." onInput={e => setBranchSearch(e.currentTarget.value) } />
+                              ? <input type="search" className={branch_input} placeholder="Enter branch name..." onInput={e => setBranchSearch(e.currentTarget.value)} />
                               : ''}
-                              
+
                            <div className={branches_container}>
                               <ol className={branchesStyle} onKeyDown={e => {
-                                 if (e.code == 'ArrowUp') {                                    
+                                 if (e.code == 'ArrowUp') {
                                     const next = document.activeElement?.parentElement?.previousElementSibling?.querySelector('a');
-                                    console.log(next);                                    
-                                    
+                                    console.log(next);
+
                                     if (next && 'focus' in next) (next as HTMLAnchorElement).focus()
                                     else {
                                        e.currentTarget.closest(`.${branches_container}`)?.parentElement?.querySelector('input')?.focus()
@@ -368,8 +374,8 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
                            </div>
                         </>
                         : ''
-                  }                  
-               </li>               
+                  }
+               </li>
             }) : <div className={css`
                text-align: center;
                color: #aa4343;    

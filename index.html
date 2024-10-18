@@ -24,7 +24,7 @@
 
             setTimeout(() => document.location = e.target.href, 350)
 
-        }</script><div class="mirror"><div class="front"><h3>Frontend developer</h3><div class="logo"></div><div>typescript</div><div><img src="/images/logos/svelte.png" height="1em" width="1em" alt=""> svelte</div><div><img src="/images/logos/rollup.png" height="1em" width="1em" alt=""> rollup</div><div><img src="/images/logos/esbuild.png" height="1em" width="1em" alt=""> esbuild</div></div><div class="back reverse"><h3>Backend developer</h3><!-- style="margin-top: .5em;" --><div class="logo" style="width: .7em; height: .7em;"></div><span style="font-size: small;color: #000; display: block;margin-bottom: .7em;">as well with following stack:</span><div><img src="/images/logos/django.png" height="1em" width="1em" alt=""> django</div><div><img src="/images/logos/python.png" height="1em" width="1em" alt=""> python</div><div>tortoise-orm</div><div>django-channels</div></div><a href="https://github.com/Sanshain" tabindex="-1"><img src="/images/logos/github.png" alt=""></a></div><div class="about">Hi! Welcome to my developer's page! I am Sanshain, full stack developer. But <i>Sanshain</i> is my nickname. And my real name is Alexander. I am from Russia. And short facts about me:<ul><li>I like mountains (as you might guess from the picture)</li><li>I really love science fiction (especcially of Stanislav Lemm and Philip Dick)</li><li>My favorite music is folk</li></ul>You can also learn about my pro skills from my <a target="_blank" tabindex="-1" href="http://github.com/Sanshain">github profile</a></div><div class="close_about">&#10006;</div><style>#search{
+        }</script><div class="mirror"><div class="front"><h3>Frontend developer</h3><div class="logo"></div><div>typescript</div><div><img src="/images/logos/svelte.png" height="1em" width="1em" alt=""> svelte</div><div><img src="/images/logos/rollup.png" height="1em" width="1em" alt=""> rollup</div><div><img src="/images/logos/esbuild.png" height="1em" width="1em" alt=""> esbuild</div></div><div class="back reverse"><h3>Backend developer</h3><!-- style="margin-top: .5em;" --><div class="logo" style="width: .7em; height: .7em;"></div><span style="font-size: small;color: #000; display: block;margin-bottom: .7em;">as well with following stack:</span><div><img src="/images/logos/django.png" height="1em" width="1em" alt=""> django</div><div><img src="/images/logos/python.png" height="1em" width="1em" alt=""> python</div><div>tortoise-orm</div><div>django-channels</div></div><a href="https://github.com/Sanshain" tabindex="-1"><img src="/images/logos/github.png" alt=""></a></div><div class="about">Hi! Welcome to my developer's page! I am Sanshain, full stack developer. But <i>Sanshain</i> is my nickname. And my real name is Alexander. I am from Russia. And short facts about me:<ul><li>I like mountains (as you might guess from the picture)</li><li>I really love science fiction (especcially of Stanislav Lemm and Philip Dick)</li><li>My favorite music is folk</li></ul>You can also learn about my pro skills from my <a target="_blank" tabindex="-1" href="http://github.com/Sanshain">github profile</a></div><div class="close_about">&#10006;</div><style>#search {
 
             position: fixed;
 
@@ -34,11 +34,11 @@
 
             transition: .5s;
 
-        }        
+        }
 
     
 
-        input{
+        input {
 
             margin: auto;
 
@@ -56,9 +56,9 @@
 
             min-width: 30em;
 
-            outline: none;            
+            outline: none;
 
-            transition: 1s;  
+            transition: 1s;
 
             font-size: medium;
 
@@ -66,23 +66,23 @@
 
             color: slategray;
 
-        }    
+        }
 
-        
+    
 
-        input:hover{
+        input:hover {
 
-            opacity: .7;            
+            opacity: .7;
 
         }
 
     
 
-        input:focus{
+        input:focus {
 
-            opacity: .9;            
+            opacity: .9;
 
-        }    
+        }
 
     
 
@@ -90,7 +90,23 @@
 
             color: aliceblue;
 
-        } */</style><div id="search"><!-- <input type="search" placeholder="Start typing repository name you want..." autofocus />
+        } */
+
+    
+
+        @media screen and (max-width: 640px) {
+
+            #search>input {
+
+                min-width: calc(100% - 9.5em);
+
+                top: -.5em;
+
+                position: relative;
+
+            }
+
+        }</style><div id="search"><!-- <input type="search" placeholder="Start typing repository name you want..." autofocus />
 
         <div class="repo_list">
 
