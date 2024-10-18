@@ -110,6 +110,7 @@
     }
 
     .about_button:focus~.about {
-        margin-top: -75vh !important;
+        /* margin-top: -64vh !important; */
+        margin-top: -75% !important;
     }
 }
