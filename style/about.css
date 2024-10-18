@@ -11,6 +11,7 @@
     transition: 1s;
     font-size: x-large;
     cursor: pointer;
+    z-index: 1;
 }
 
 .about_button {
@@ -103,6 +104,13 @@
     /* color: gray !important; */
 }
 
+
+@media screen and (max-width: 768px) {
+    .about_button:focus~.about {
+        margin-top: -64vh !important;
+    }
+}
+
 @media screen and (max-width: 480px) {
     .about {
         margin: 2em;
@@ -110,7 +118,7 @@
     }
 
     .about_button:focus~.about {
-        /* margin-top: -64vh !important; */
-        margin-top: -75% !important;
+        margin-top: -64vh !important;
+        /* margin-top: -75% !important; */
     }
 }
