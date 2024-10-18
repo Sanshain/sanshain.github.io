@@ -313,7 +313,7 @@
                         e.preventDefault();
                       }
                     },
-                    children: repo.branches.filter(b => ~b.indexOf(branchSearch)).map(branchname => {
+                    children: repo.branches.filter(b => ~b.indexOf(branchSearch.toLocaleLowerCase())).map(branchname => {
                       //  style={{ display: ~branchname.indexOf(branchSearch) ? '' : 'none' }}
                       return u$1("li", {
                         children: u$1("a", {

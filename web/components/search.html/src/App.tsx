@@ -370,7 +370,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
                                     e.preventDefault()
                                  }
                               }}>
-                                 {repo.branches.filter(b => ~b.indexOf(branchSearch)).map(branchname => {
+                                 {repo.branches.filter(b => ~b.indexOf(branchSearch.toLocaleLowerCase())).map(branchname => {
                                     //  style={{ display: ~branchname.indexOf(branchSearch) ? '' : 'none' }}
                                     return <li>
                                        <a href={`${repo.html_url}#${branchname}`} className={branch_link} onKeyDown={e => copyBranchUrl(e, repo)}>{branchname}</a>
