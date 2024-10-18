@@ -42,7 +42,7 @@ li.repo_block{
 
 @media screen and (max-width: 640px) {
     li.repo_block{
-        height: auto !important;
+        /* height: auto !important; */
         max-height: none;
     }
 }

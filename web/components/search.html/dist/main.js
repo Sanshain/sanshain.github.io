@@ -53,7 +53,7 @@
     }
   }
 
-  var css_248z = ".style_header__3t_1_{color:red;color:#00f}ul.style_repo_list__233KR{padding:2em 1em}li.style_repo_block__3lNVy{position:relative;list-style-type:none;box-shadow:0 0 5px #fff;color:#fff;width:calc(100% - 4em);padding:.5em 1em;margin:.8em .2em;border-radius:.75em;border:1px solid transparent;transition:.3s linear;outline:none;max-height:550px}li.style_repo_block__3lNVy a{color:#fff}li.style_repo_block__3lNVy:focus{border:1px solid #add8e6;box-shadow:0 0 15px grey}.style_repo_block__3lNVy:hover{box-shadow:0 0 15px #fff;background-color:rgba(0,0,0,.11)}@media screen and (max-width:640px){li.style_repo_block__3lNVy{height:auto!important;max-height:none}}";
+  var css_248z = ".style_header__3t_1_{color:red;color:#00f}ul.style_repo_list__233KR{padding:2em 1em}li.style_repo_block__3lNVy{position:relative;list-style-type:none;box-shadow:0 0 5px #fff;color:#fff;width:calc(100% - 4em);padding:.5em 1em;margin:.8em .2em;border-radius:.75em;border:1px solid transparent;transition:.3s linear;outline:none;max-height:550px}li.style_repo_block__3lNVy a{color:#fff}li.style_repo_block__3lNVy:focus{border:1px solid #add8e6;box-shadow:0 0 15px grey}.style_repo_block__3lNVy:hover{box-shadow:0 0 15px #fff;background-color:rgba(0,0,0,.11)}@media screen and (max-width:640px){li.style_repo_block__3lNVy{max-height:none}}";
   var style = {"header":"style_header__3t_1_","repo_list":"style_repo_list__233KR","repo_block":"style_repo_block__3lNVy"};
   styleInject(css_248z, undefined, "12xcavg");
   if (window.import && window.import.meta.hot) window.import.meta.hot.accept();
@@ -200,7 +200,8 @@
         handlingContainer.style.height = (prevExpandedHeight = handlingContainer.clientHeight - 16) + 'px';
         setTimeout(() => {
           var _a;
-          handlingContainer.style.height = handlingContainer.clientHeight + (((_a = repo.branches) === null || _a === void 0 ? void 0 : _a.length) || 0) * 26 - 0 + 'px';
+          const maxLength = Math.min(((_a = repo.branches) === null || _a === void 0 ? void 0 : _a.length) || 0, 14);
+          handlingContainer.style.height = handlingContainer.clientHeight + (maxLength || 0) * 26 - 0 + 'px';
           setTimeout(() => {
             setExpand(repo.id);
             if (expandedContainer) {

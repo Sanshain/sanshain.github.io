@@ -201,7 +201,8 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
          handlingContainer.style.height = (prevExpandedHeight = handlingContainer.clientHeight - 16) + 'px';
 
          setTimeout(() => {
-            handlingContainer.style.height = handlingContainer.clientHeight + (repo.branches?.length || 0) * 26 - 0 + 'px';
+            const maxLength = Math.min(repo.branches?.length || 0, 14)
+            handlingContainer.style.height = handlingContainer.clientHeight + (maxLength || 0) * 26 - 0 + 'px';
             setTimeout(() => {
                setExpand(repo.id);
                if (expandedContainer) {
@@ -304,6 +305,7 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
    const branches_container = css`
       max-height: 310px;
       overflow: scroll;
+      scrollbar-width: none;  /* Firefox */
    `;
 
    const [branchSearch, setBranchSearch] = useState<string>('')
