@@ -210,8 +210,15 @@
             }
             /// move to useEffect:
             setTimeout(() => {
+              var _a;
               const branchInput = handlingContainer.querySelector('input');
-              if (branchInput) {
+              const screenWidth = window.screen.width;
+              if (screenWidth < 600) {
+                (_a = expandedContainer.querySelector('ol')) === null || _a === void 0 ? void 0 : _a.scrollIntoView({
+                  behavior: "smooth",
+                  block: 'start'
+                });
+              } else if (branchInput) {
                 branchInput.focus();
               }
             });

@@ -212,7 +212,11 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
                /// move to useEffect:
                setTimeout(() => {
                   const branchInput = handlingContainer.querySelector('input');
-                  if (branchInput) {
+                  const screenWidth = window.screen.width;
+                  if (screenWidth < 600) {
+                     expandedContainer.querySelector('ol')?.scrollIntoView({behavior: "smooth", block: 'start'})
+                  }
+                  else if (branchInput) {
                      branchInput.focus()
                   }
                })
@@ -220,9 +224,9 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
          });
       }
 
-      function collapsCurrentRepo() {
+      function collapsCurrentRepo(): HTMLLIElement {
          const _prevExpandedHeight = prevExpandedHeight;
-         const expandedContainer = document.getElementById(expandedRepo.toString());
+         const expandedContainer = document.getElementById(expandedRepo.toString()) as HTMLLIElement;
          setTimeout(() => {
             if (_prevExpandedHeight && expandedContainer) {
                // console.log(_prevExpandedHeight, prevExpandedHeight);               
