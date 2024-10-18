@@ -294,6 +294,11 @@ function App({ onFocus, onBlur }: { onFocus: Function, onBlur: Function }): h.JS
          color: lightgray;
          font-size:small
       }
+
+      @media screen and (max-width: 640px) {
+
+         min-width: 14em;
+      }
    `;
 
    const branches_container = css`
